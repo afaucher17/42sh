@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/12/28 17:22:09 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/02/05 12:03:50 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/02/25 17:27:02 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,8 @@ int					ft_builtin(char **cmd, t_list **env)
 			return (ft_remenv(cmd, env));
 		if (ft_strequ(cmd[0], "cd"))
 			return (ft_cdenv(cmd, env));
+		if (ft_strequ(cmd[0], "echo"))
+			return (ft_echo(cmd, env));
 	}
 	return (0);
 }

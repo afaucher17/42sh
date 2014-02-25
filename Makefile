@@ -6,7 +6,7 @@
 #    By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2013/12/27 14:53:18 by tdieumeg          #+#    #+#              #
-#    Updated: 2014/02/25 13:11:41 by tdieumeg         ###   ########.fr        #
+#    Updated: 2014/02/25 17:36:06 by tdieumeg         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ OBJ		= main.o \
 		  ft_node.o \
 		  ft_builtin.o \
 		  ft_cdenv.o \
+		  ft_echo.o \
 		  ft_chdir.o \
 		  ft_checkpath.o \
 		  ft_envman.o \

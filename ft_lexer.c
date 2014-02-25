@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/24 13:44:15 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/02/24 15:17:30 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/02/25 18:20:28 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ static char		handler_special(char **str, char *buf, int *i, t_token **list)
 {
 	int			size;
 
+
 	if ((size = is_special(*str)) != 0)
 	{
 		if (buf[0] != '\0')
@@ -57,14 +58,14 @@ static char		handler_special(char **str, char *buf, int *i, t_token **list)
 	return (0);
 }
 
-static void		handler_normal(char **str, char *buf, int *i, int quote)
+static void		handler_normal(char **str, char *buf, int *i, int *inhib)
 {
-	if (**str == '\"')
+	if ((**str == '\"' && !inhib[1]) || (**str == '\'' && !inhib[0]))
 	{
 		*str = (*str) + 1;
 		return ;
 	}
-	if ((**str == '\\') && !(quote
+	if (!inhib[1] && (**str == '\\') && !(inhib[0]
 		&& *(*str + 1) != '\"' && *(*str + 1) != '\\'))
 		*str = (*str) + 1;
 	buf[*i] = **str;
@@ -87,7 +88,7 @@ static char		*ft_wait_finish(char *str, t_dlist *stack)
 	return (complete);
 }
 
-void			ft_lexer(char *str, t_dlist *stack, int dquote, t_token **list)
+void			ft_lexer(char *str, t_dlist *stack, int *inhib, t_token **list)
 {
 	char		*buf;
 	int			i;
@@ -96,14 +97,20 @@ void			ft_lexer(char *str, t_dlist *stack, int dquote, t_token **list)
 	buf = ft_strnew(BUFF_SIZE);
 	while (*str)
 	{
-		dquote ^= (*str == '\"');
-		if (dquote || !handler_special(&str, buf, &i, list))
-			handler_normal(&str, buf, &i, dquote);
+		inhib[0] ^= (*str == '\"' && !inhib[1]);
+		inhib[1] ^= (*str == '\'' && !inhib[0]);
+		if (!inhib[0] && !inhib[1])
+		{
+			inhib[2] -= (*str == ')');
+			inhib[2] += (*str == '(');
+		}
+		if (inhib[0] || inhib[1] || !handler_special(&str, buf, &i, list))
+			handler_normal(&str, buf, &i, inhib);
 	}
-	if (dquote)
+	if (inhib[0] || inhib[1] || inhib[2] > 0)
 	{
 		buf = ft_wait_finish(buf, stack);
-		ft_lexer(buf, stack, dquote, list);
+		ft_lexer(buf, stack, inhib, list);
 	}
 	else if (buf[0] != '\0')
 		ft_tokenpushback(list, ft_strdup(buf), WORD);

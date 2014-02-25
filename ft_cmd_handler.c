@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/15 14:46:12 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/02/19 15:57:32 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/02/25 17:49:04 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int				ft_cmd_handler(t_node *tree, t_list **env, int *pfd, int *pfd2)
 	charenv = ft_tochar(*env);
 	cmd = ft_arg_handler(tree, ft_strdup(tree->data));
 	builtin = ft_builtin(cmd, env);
-	/*ft_clear_tab(cmd);*/
+	ft_clear_tab(cmd);
 	cmd = NULL;
 	if (!builtin)
 		cmd = ft_arg_handler(tree, ft_checkpath(tree->data, charenv));

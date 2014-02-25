@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/05 12:42:10 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/02/25 13:15:31 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/02/25 17:35:45 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ typedef	struct		s_keys
 /*
 ** ft_lexer.c
 */
-void			ft_lexer(char *str, t_dlist *stack, int quote, t_token **list);
+void			ft_lexer(char *str, t_dlist *stack, int *inhib, t_token **list);
 
 /*
 ** ft_parser.c
@@ -139,6 +139,11 @@ int				ft_builtin(char **cmd, t_list **env);
 ** ft_cdenv.c
 */
 int				ft_cdenv(char **cmd, t_list **env);
+
+/*
+** ft_echo.c
+*/
+int				ft_echo(char **cmd, t_list **env);
 
 /*
 ** ft_notfnd.c

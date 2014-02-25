@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/12/28 11:15:15 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/02/24 18:30:02 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/02/25 17:12:12 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ static t_dlist	*fill_stack(t_dlist *stack, char *buff)
 		dup[i - 1] = '\0';
 	if (stack)
 	{
+		free(stack->content);
 		stack->content = dup;
 		stack->content_size = i + 1;
 	}
@@ -58,6 +59,7 @@ int				main(int ac, char **av, char **environ)
 	t_token		*list;
 	t_list		*env;
 	t_dlist		*stack;
+	int			inhib[3] = {0, 0, 0};
 
 	(void)ac;
 	(void)av;
@@ -71,13 +73,10 @@ int				main(int ac, char **av, char **environ)
 	{
 		buff = ft_init(&stack, buff);
 		ft_dlstpushfront(&stack, "", 1);
-		ft_lexer(buff, stack, 0, &list);
+		ft_lexer(buff, stack, inhib, &list);
 		free(buff);
 		if (list)
 			ft_compute(&list, &env);
-		ft_reset_term();
 	}
-	ft_dlist_clear(&stack);
-	ft_list_clear(&env);
 	return (0);
 }
