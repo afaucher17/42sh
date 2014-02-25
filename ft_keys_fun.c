@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/06 12:04:11 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/02/25 14:27:29 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/02/25 18:36:06 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,10 @@
 
 void			ft_backspace(t_dlist **list, int visual)
 {
-	int			j;
-
-	j = g_idx;
 	if (g_idx > 0)
 	{
 		ft_l_arrow(list, visual);
-		if (!visual)
-		{
-			ft_memmove(g_cmd + g_idx, g_cmd + g_idx + 1, ft_strlen(g_cmd + g_idx));
-			ft_putstr(g_cmd + g_idx);
-			g_idx += ft_strlen(g_cmd + g_idx);
-			ft_putchar(' ');
-			tputs(tgetstr("le", NULL), 1, ft_putchar_tc);
-			if (((g_idx + ft_strlen(PROMPT))
-					% ft_get_winsz()->ws_col) == ft_get_winsz()->ws_col - 1)
-				tputs(tgetstr("nd", NULL), 1, ft_putchar_tc);
-			while (g_idx > 0 && g_idx + 1 > j)
-				ft_l_arrow(list, 0);
-		}
+		ft_delete(list, visual);
 	}
 }
 
@@ -48,6 +33,9 @@ void			ft_delete(t_dlist **list, int visual)
 		g_idx += ft_strlen(g_cmd + g_idx);
 		ft_putchar(' ');
 		tputs(tgetstr("le", NULL), 1, ft_putchar_tc);
+		if (((g_idx + ft_strlen(PROMPT))
+			% ft_get_winsz()->ws_col) == ft_get_winsz()->ws_col - 1)
+			tputs(tgetstr("nd", NULL), 1, ft_putchar_tc);
 		while (g_idx > 0 && g_idx > j)
 			ft_l_arrow(list, 0);
 	}
