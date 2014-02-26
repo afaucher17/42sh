@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/12/28 11:15:15 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/02/26 14:30:44 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/02/26 19:14:42 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,33 +23,14 @@ static int		ft_compute(t_token **list, t_list **env)
 	return (1);
 }
 
-static t_dlist	*fill_stack(t_dlist *stack, char *buff)
-{
-	int			i;
-	char		*dup;
-
-	dup = ft_strdup(buff);
-	i = ft_strlen(dup);
-	if (i > 0)
-		dup[i - 1] = '\0';
-	if (stack)
-	{
-		free(stack->content);
-		stack->content = dup;
-		stack->content_size = i + 1;
-	}
-	return (stack);
-}
-
-static char		*ft_init(t_dlist **stack, char *buff)
+static char		*ft_init(char *buff)
 {
 	signal(SIGINT, ft_sighandler);
 	ft_putstr(PROMPT);
 	ft_set_term();
-	buff = ft_read_keys(*stack);
+	buff = ft_read_keys(ft_log_to_dlist());
 	ft_bzero(g_cmd, BUFF_SIZE);
 	g_idx = 0;
-	*stack = fill_stack(*stack, buff);
 	return (buff);
 }
 
@@ -58,22 +39,17 @@ int				main(int ac, char **av, char **environ)
 	char		*buff;
 	t_token		*list;
 	t_list		*env;
-	t_dlist		*stack;
-	int			inhib[3] = {0, 0, 0};
-
+	
 	(void)ac;
 	(void)av;
-	stack = NULL;
 	list = NULL;
 	env = ft_duplicate(environ);
 	if (!env)
 		ft_lstpushback(&env, "PATH=", 5);
-	ft_dlstpushfront(&stack, "", 1);
 	while (42)
 	{
-		buff = ft_init(&stack, buff);
-		ft_dlstpushfront(&stack, "", 1);
-		ft_lexer(buff, stack, inhib, &list);
+		buff = ft_init(buff);
+		ft_lexer(ft_analyser(buff), &list);
 		free(buff);
 		if (list)
 			ft_compute(&list, &env);

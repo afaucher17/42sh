@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/06 12:27:20 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/02/24 15:31:46 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/02/26 18:46:17 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,15 @@ void				ft_alt_r_arrow(t_dlist **list, int visual)
 		if (ft_get_copy()->visual_mode)
 			visual++;
 	}
+}
+
+void				ft_return(t_dlist **list, int visual)
+{
+	visual = 0;
+	ft_get_copy()->visual_mode = 0;
+	tputs(tgetstr("me", NULL), 1, ft_putchar_tc);
+	ft_end(list, 0);
+	g_cmd[g_idx] = '\n';
+	ft_putchar('\n');
+	ft_dlist_clear(list);
 }

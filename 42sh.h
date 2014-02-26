@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/05 12:42:10 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/02/26 13:50:30 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/02/26 19:10:36 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,14 @@ typedef	struct		s_keys
 }					t_keys;
 
 /*
+** ft_analyser.c
+*/
+char			*ft_analyser(char *cmd);
+
+/*
 ** ft_lexer.c
 */
-void			ft_lexer(char *str, t_dlist *stack, int *inhib, t_token **list);
+void			ft_lexer(char *str, t_token **list);
 
 /*
 ** ft_parser.c
@@ -219,10 +224,17 @@ void			ft_alt_u_arrow(t_dlist **list, int visual);
 void			ft_alt_d_arrow(t_dlist **list, int visual);
 void			ft_alt_l_arrow(t_dlist **list, int visual);
 void			ft_alt_r_arrow(t_dlist **list, int visual);
+void			ft_return(t_dlist **list, int visual);
 
 /*
 ** ft_putchar_tc.c
 */
 int				ft_putchar_tc(int c);
+
+/*
+** ft_log.c
+*/
+t_dlist			*ft_log_to_dlist(void);
+void			ft_append_cmd_to_log(char *cmd);
 
 #endif				/* !_42SH_H */

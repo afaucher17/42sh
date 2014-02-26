@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/04 18:19:27 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/02/24 18:21:21 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/02/26 18:45:27 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,11 +103,7 @@ char				*ft_read_keys(t_dlist *list)
 			c = buff & 0x000000FF;
 			if (buff == RETURN)
 			{
-				ft_get_copy()->visual_mode = 0;
-				tputs(tgetstr("me", NULL), 1, ft_putchar_tc);
-				ft_end(&list, 0);
-				g_cmd[g_idx] = c;
-				ft_putchar('\n');
+				ft_return(&list, 0);
 				return (ft_strdup(g_cmd));
 			}
 			j = ft_get_fun(buff, &list);

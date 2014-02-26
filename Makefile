@@ -6,7 +6,7 @@
 #    By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2013/12/27 14:53:18 by tdieumeg          #+#    #+#              #
-#    Updated: 2014/02/26 13:51:04 by tdieumeg         ###   ########.fr        #
+#    Updated: 2014/02/26 18:46:59 by tdieumeg         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ CC		= /usr/bin/cc
 DEPS	= 42sh.h
 
 OBJ		= main.o \
+		  ft_analyser.o \
 		  ft_lexer.o \
 		  ft_parser.o \
 		  ft_parse_fun.o \
@@ -40,6 +41,7 @@ OBJ		= main.o \
 		  ft_keys_fun2.o \
 		  ft_keys_fun3.o \
 		  ft_putchar_tc.o \
+		  ft_log.o \
 		  ft_utility_fun.o 
 
 CFLAGS	= -Wall -Wextra -Werror -g
