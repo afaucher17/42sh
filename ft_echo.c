@@ -6,12 +6,16 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/25 17:25:52 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/02/25 17:40:04 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/02/26 14:44:26 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "42sh.h"
 
+static char	*ft_replaceeol(char *str)
+{
+
+}
 int			ft_echo(char **cmd, t_list **env)
 {
 	int		i;

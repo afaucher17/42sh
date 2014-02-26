@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/24 14:18:26 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/02/04 15:48:01 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/02/26 13:00:29 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ t_node		*ft_parser(t_token *list)
 	if (!parse_expr(&list, &tree))
 	{
 		ft_clear_tree(&tree);
-		ft_putendl_fd("ft_sh3: parse error", 2);
+		ft_putendl_fd("42sh: parse error", 2);
 		return (tree);
 	}
 	return (tree);

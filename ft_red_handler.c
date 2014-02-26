@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/25 13:20:14 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/02/04 14:10:55 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/02/26 14:23:38 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,24 +35,24 @@ static int		ft_rred_handler(t_node *tree)
 static int		ft_dlred_handler(t_node *tree)
 {
 	int			fd;
-	int			ret;
-	char		buf[BUFF_SIZE];
+	char		*buff;
 
 	fd = open(".dump", O_WRONLY |
-			O_CREAT, S_IRUSR | S_IWUSR | S_IRGRP | O_APPEND);
+			O_CREAT, S_IRUSR | S_IWUSR | S_IRGRP | O_TRUNC);
 	while (42)
 	{
-		ft_putstr("> ");
-		ret = read(0, buf, BUFF_SIZE);
-		buf[ret] = '\0';
-		if (ft_strnequ(buf, tree->data, ft_strlen(buf) - 1))
+		ft_putstr("heredoc> ");
+		buff = ft_read_keys(NULL);
+		ft_bzero(g_cmd, BUFF_SIZE);
+		g_idx = 0;
+		if (ft_strnequ(buff, tree->data, ft_strlen(buff) - 1))
 			break ;
-		ft_putstr_fd(buf, fd);
+		ft_putstr_fd(buff, fd);
 	}
 	close(fd);
 	fd = open(".dump", O_RDONLY);
 	dup2(fd, 0);
-	ft_remove_file(".dump");
+	unlink("./.dump");
 	return (1);
 }
 

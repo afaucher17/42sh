@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/05 12:42:10 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/02/25 17:35:45 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/02/26 13:50:30 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,11 +165,6 @@ int				ft_cmd_handler(t_node *tree, t_list **env, int *pfd,
 ** ft_red_handler.c
 */
 int				ft_red_handler(t_node *tree);
-
-/*
-** ft_remove_file.c
-*/
-void			ft_remove_file(char *filename);
 
 /*
 ** ft_red_open.c
