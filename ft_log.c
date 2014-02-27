@@ -6,55 +6,71 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/26 14:24:05 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/02/26 19:28:55 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/02/27 12:38:23 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include			"42sh.h"
 
-static int			split_buffer(char **buf, char **line)
+static char		*proper_join(char *s1, char *s2)
 {
-	char			*save_line;
-	char			*save_buf;
+	size_t		s1_len;
+	size_t		s2_len;
+	char		*result;
 
-	save_line = *line;
-	save_buf = *buf;
-	if (ft_strchr(*buf, 3))
+	s1_len = (s1) ? ft_strlen(s1) : 0;
+	s2_len = ft_strlen(s2);
+	result = ft_strnew(s1_len + s2_len);
+	if (result)
 	{
-		*line = ft_strjoin(*line
-				, ft_strsub(*buf, 0, ft_strchr(*buf, 3) - *buf));
-		*buf = ft_strdup(ft_strchr(*buf, 3) + 1);
-		free(save_buf);
+		if (s1)
+			ft_memcpy(result, s1, s1_len);
+		ft_memcpy(result + s1_len, s2, s2_len);
+	}
+	if (s1)
+		ft_strdel(&s1);
+	return (result);
+}
+
+static int		cut_at_newline(char **save_buff, char **line)
+{
+	char		*delimiter;
+
+	if ((delimiter = ft_strchr(*save_buff, '\3')))	
+	{
+		*line = ft_strsub(*save_buff, 0, delimiter - *save_buff);
+		ft_strcpy(*save_buff, delimiter + 1);
 		return (1);
 	}
-	*line = ft_strjoin(*line, *buf);
-	free(save_line);
 	return (0);
 }
 
-static int			get_next_cmd(int const fd, char **line)
+static int		get_next_cmd(int const fd, char **line)
 {
-	static int		old_fd = 0;
-	static char		*buf = NULL;
-	int				len;
+	int			bytes_read;
+	char		buff[BUFF_SIZE + 1];
+	static char	*save_buff = NULL;
 
-	*line = ft_strdup("");
-	if (buf && old_fd == fd)
-		if (split_buffer(&buf, line))
-			return (1);
-	old_fd = fd;
-	buf = ft_strnew(BUFF_SIZE);
-	while ((len = read(fd, buf, BUFF_SIZE)) != -1)
+	if (save_buff && cut_at_newline(&save_buff, line))
+		return (1);
+	while ((bytes_read = read(fd, buff, BUFF_SIZE)) > 0)
 	{
-		buf[len] = '\0';
-		if (len == 0)
-			return (0);
-		if (split_buffer(&buf, line))
-			return (1);
-		if (len < BUFF_SIZE)
+		buff[bytes_read] = '\0';
+		save_buff = proper_join(save_buff, buff);
+		if (cut_at_newline(&save_buff, line))
 			return (1);
 	}
-	return (-1);
+	if (bytes_read < 0)
+		return (-1);
+	if (save_buff && *save_buff)
+	{
+		*line = ft_strdup(save_buff);
+		ft_strdel(&save_buff);
+		return (1);
+	}
+	if (save_buff)
+		ft_strdel(&save_buff);
+	return (0);
 }
 
 t_dlist			*ft_log_to_dlist(void)

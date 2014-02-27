@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/04 18:19:27 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/02/26 18:45:27 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/02/27 15:00:33 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,10 +89,12 @@ static void			ft_insert(int j, char c)
 
 char				*ft_read_keys(t_dlist *list)
 {
+	t_dlist			*save;
 	int				buff;
 	int				j;
 	char			c;
 
+	save = list;
 	if (g_cmd == NULL)
 		g_cmd = ft_strnew(BUFF_SIZE);
 	while (42)
@@ -103,7 +105,7 @@ char				*ft_read_keys(t_dlist *list)
 			c = buff & 0x000000FF;
 			if (buff == RETURN)
 			{
-				ft_return(&list, 0);
+				ft_return(&save, 0);
 				return (ft_strdup(g_cmd));
 			}
 			j = ft_get_fun(buff, &list);
