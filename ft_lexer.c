@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/24 13:44:15 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/02/26 19:10:16 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/03 18:24:41 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@ static char		is_special(char *str)
 {
 	int			i;
 	int			size;
-	char		*special[12] = {
-		"<<", "<", ">>", ">", ";", "`", "'", " ", "!", "\t", "|", "\n"
+	char		*special[9] = {
+		"<<", "<", ">>", ">", ";", " ", "\t", "|", "\n"
 	};
 
 	i = 0;
-	while (i < 12)
+	while (i < 9)
 	{
 		size = ft_strlen(special[i]);
 		if (ft_strncmp(str, special[i], size) == 0)
@@ -35,7 +35,14 @@ static char		handler_special(char **str, char *buf, int *i, t_token **list)
 {
 	int			size;
 
-	if ((size = is_special(*str)) != 0)
+	if (**str == '`')
+	{
+		if (buf[0] != '\0')
+			ft_tokenpushback(list, ft_strdup(buf), BQUOTE);
+		ft_bzero(buf, BUFF_SIZE);
+		*i = 0;
+	}
+	else if ((size = is_special(*str)) != 0)
 	{
 		if (buf[0] != '\0')
 			ft_tokenpushback(list, ft_strdup(buf), WORD);
@@ -59,7 +66,8 @@ static char		handler_special(char **str, char *buf, int *i, t_token **list)
 
 static void		handler_normal(char **str, char *buf, int *i, int *inhib)
 {
-	if ((**str == '\"' && !inhib[1]) || (**str == '\'' && !inhib[0]))
+	if ((**str == '\"' && !inhib[1]) || (**str == '\'' && !inhib[0])
+		|| (**str == '`' && !inhib[1]))
 	{
 		*str = (*str) + 1;
 		return ;
@@ -72,26 +80,28 @@ static void		handler_normal(char **str, char *buf, int *i, int *inhib)
 	*str = (*str) + 1;
 }
 
-void			ft_lexer(char *str, t_token **list)
+void			ft_lexer(char *str, t_token **list, int save_com)
 {
 	char		*buf;
 	char		*save;
 	int			i;
-	int			inhib[2] = {0, 0};
+	int			inhib[3] = {0, 0, 0};
 
 	i = 0;
 	save = str;
 	buf = ft_strnew(BUFF_SIZE);
-	while (*str)
+	while (str && *str)
 	{
 		inhib[0] ^= (*str == '\"' && !inhib[1]);
 		inhib[1] ^= (*str == '\'' && !inhib[0]);
-		if (inhib[0] || inhib[1] || !handler_special(&str, buf, &i, list))
+		inhib[2] ^= (*str == '`' && !inhib[1]);
+		if (inhib[0] || inhib[1] || inhib[2]
+				|| !handler_special(&str, buf, &i, list))
 			handler_normal(&str, buf, &i, inhib);
 	}
 	if (buf[0] != '\0')
 		ft_tokenpushback(list, ft_strdup(buf), WORD);
-	if (*list)
+	if (*list && save_com)
 		ft_append_cmd_to_log(save);
 	free(buf);
 }

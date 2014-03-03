@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/15 14:46:12 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/02/25 17:49:04 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/03 19:05:34 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,13 @@ static void		ft_pfd_close(int *pfd)
 	}
 }
 
-static void		ft_son(t_node *tree, int builtin, char **cmd, char **charenv)
+static void		ft_son(t_node *tree, int builtin, char **cmd, char **charenv,
+							t_list **fdlist)
 {
 	signal(SIGINT, SIG_DFL);
-	ft_red_handler(tree->left);
 	if (!builtin)
 	{
+		ft_red_handler(tree->left, fdlist);
 		ft_reset_term();
 		execve(cmd[0], cmd, charenv);
 		ft_notfnd(cmd[0]);
@@ -55,11 +56,13 @@ static void		ft_son(t_node *tree, int builtin, char **cmd, char **charenv)
 	exit(EXIT_SUCCESS);
 }
 
-static void		ft_father(pid_t pid, int *pfd, char ***cmd, char ***charenv)
+static void		ft_father(pid_t pid, int *pfd, char ***cmd, char ***charenv,
+							t_list **fdlist)
 {
 	signal(SIGINT, ft_sighand2);
 	ft_pfd_close(pfd);
 	wait(&pid);
+	ft_close_fdlist(fdlist);
 	ft_clear_tab(*cmd);
 	ft_clear_tab(*charenv);
 }
@@ -70,10 +73,12 @@ int				ft_cmd_handler(t_node *tree, t_list **env, int *pfd, int *pfd2)
 	int			builtin;
 	char		**cmd;
 	char		**charenv;
+	t_list		*fdlist;
 
+	fdlist = NULL;
 	charenv = ft_tochar(*env);
 	cmd = ft_arg_handler(tree, ft_strdup(tree->data));
-	builtin = ft_builtin(cmd, env);
+	builtin = ft_builtin(cmd, env, tree, &fdlist);
 	ft_clear_tab(cmd);
 	cmd = NULL;
 	if (!builtin)
@@ -83,9 +88,9 @@ int				ft_cmd_handler(t_node *tree, t_list **env, int *pfd, int *pfd2)
 	if (pid == 0)
 	{
 		ft_pfd_manage(pfd, pfd2);
-		ft_son(tree, builtin, cmd, charenv);
+		ft_son(tree, builtin, cmd, charenv, &fdlist);
 	}
 	else
-		ft_father(pid, pfd, &cmd, &charenv);
+		ft_father(pid, pfd, &cmd, &charenv, &fdlist);
 	return (1);
 }

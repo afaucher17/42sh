@@ -6,7 +6,7 @@
 /*   By: tdieumeg <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/22 21:39:01 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/02/04 15:44:23 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/03 14:51:19 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,32 @@ void			ft_tokenpushback(t_token **token, char *data, char type)
 			cur = cur->next;
 		cur->next = new;
 	}
+}
+
+t_token			*ft_token_split(char *s, char *special)
+{
+	t_token		*list;
+	char		*buff;
+	int			i;
+
+	list = NULL;
+	buff = ft_strnew(ft_strlen(s));
+	i = 0;
+	while (s && *s)
+		if (ft_strchr(special, *s))
+		{
+			if (buff[0])
+				ft_tokenpushback(&list, ft_strdup(buff), WORD);
+			ft_bzero(buff, i);
+			i = 0;
+			s++;
+		}
+		else
+		{
+			buff[i] = *s;
+			i++;
+			s++;
+		}
+	free(buff);
+	return (list);
 }

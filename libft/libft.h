@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/11/23 16:14:12 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/02/19 11:47:18 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/03 12:24:27 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef struct		s_dlist
 int				ft_atoi(const char *str);
 void			ft_bzero(void *s, size_t n);
 int				ft_clear_tab(char **t);
+char			*ft_concat(t_list *list);
 int				ft_isalnum(int c);
 int				ft_isalpha(int c);
 int				ft_isascii(int c);

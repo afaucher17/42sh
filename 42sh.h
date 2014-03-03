@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/05 12:42:10 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/02/27 15:04:01 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/03 16:28:42 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include			<stdlib.h>
 # include			<fcntl.h>
 # include			"libft/libft.h"
-# define BUFF_SIZE	8192
+# define BUFF_SIZE	512
 # define COM		0
 # define COM_ARG	1
 # define REDIRECT	2
@@ -29,10 +29,11 @@
 # define EXPR		4
 # define WORD		5
 # define SPECIAL	6
-# define LEFT_RED	7
-# define DLEFT_RED	8
-# define RIGHT_RED	9
-# define DRIGHT_RED	10
+# define BQUOTE		7
+# define LEFT_RED	8
+# define DLEFT_RED	9
+# define RIGHT_RED	10
+# define DRIGHT_RED	11
 # define ALT_U_A	1096489755
 # define ALT_D_A	1113266971
 # define ALT_R_A	1130044187
@@ -85,6 +86,11 @@ typedef	struct		s_keys
 }					t_keys;
 
 /*
+** main.c
+*/
+int				ft_compute(t_token **list, t_list **env);
+
+/*
 ** ft_analyser.c
 */
 char			*ft_analyser(char *cmd);
@@ -92,7 +98,7 @@ char			*ft_analyser(char *cmd);
 /*
 ** ft_lexer.c
 */
-void			ft_lexer(char *str, t_token **list);
+void			ft_lexer(char *str, t_token **list, int save_com);
 
 /*
 ** ft_parser.c
@@ -110,6 +116,7 @@ char			parse_pipe(t_token **list, t_node **tree);
 int				ft_token_clear(t_token **list);
 char			ft_tokenstep(t_token **list);
 void			ft_tokenpushback(t_token **token, char *data, char type);
+t_token			*ft_token_split(char *s, char *special);
 
 /*
 ** ft_node.c
@@ -138,7 +145,8 @@ void			ft_sighand2(int signal);
 /*
 ** ft_builtin.c
 */
-int				ft_builtin(char **cmd, t_list **env);
+int				ft_builtin(char **cmd, t_list **env, t_node *tree,
+								t_list **list);
 
 /*
 ** ft_cdenv.c
@@ -148,7 +156,7 @@ int				ft_cdenv(char **cmd, t_list **env);
 /*
 ** ft_echo.c
 */
-int				ft_echo(char **cmd, t_list **env);
+int				ft_echo(char **cmd, t_list **env, t_node *tree, t_list **list);
 
 /*
 ** ft_notfnd.c
@@ -169,7 +177,7 @@ int				ft_cmd_handler(t_node *tree, t_list **env, int *pfd,
 /*
 ** ft_red_handler.c
 */
-int				ft_red_handler(t_node *tree);
+int				ft_red_handler(t_node *tree, t_list **list);
 
 /*
 ** ft_red_open.c
@@ -183,11 +191,18 @@ char			**ft_arg_handler(t_node *tree, char *cmd);
 int				ft_expr_handler(t_node *tree, t_list **env);
 
 /*
+** ft_get_bquote.c
+*/
+void			ft_get_bquote(t_token **list, t_list **env);
+
+/*
 ** ft_utility_fun.c
 */
 t_winsize		*ft_get_winsz(void);
+int				*ft_reset_std(void);
 t_copy			*ft_get_copy(void);
 char			*ft_insertchar(char c, char *cmd, int idx);
+void			ft_close_fdlist(t_list **list);
 
 /*
 ** ft_term_fun.c

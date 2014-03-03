@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/05 17:07:08 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/02/27 15:03:47 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/02 15:03:55 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,20 @@ t_winsize				*ft_get_winsz(void)
 
 	ioctl(0, TIOCGWINSZ, &ws);
 	return (&ws);
+}
+
+int						*ft_reset_std(void)
+{
+	static int			std[2] = {0, 0};
+	static int			is_off = 0;
+
+	if (!is_off)
+	{
+		std[0] = dup(0);
+		std[1] = dup(1);
+		is_off = 1;
+	}
+	return (std);
 }
 
 t_copy					*ft_get_copy(void)
@@ -55,4 +69,17 @@ char			*ft_insertchar(char c, char *cmd, int idx)
 		i++;
 	}
 	return (new);
+}
+
+void			ft_close_fdlist(t_list **list)
+{
+	t_list		*save;
+
+	save = *list;
+	while (save)
+	{
+		close(*((int*)save->content));
+		save = save->next;
+	}
+	ft_list_clear(list);
 }

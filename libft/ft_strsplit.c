@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/11/23 11:35:27 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/02/15 15:26:11 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/03 12:33:47 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_list				*ft_strsplit(char const *s, char *special)
 		if (ft_strchr(special, *s))
 		{
 			if (buff[0])
-				ft_lstpushback(&list, buff, ft_strlen(buff));
+				ft_lstpushback(&list, buff, ft_strlen(buff) + 1);
 			ft_bzero(buff, i);
 			i = 0;
 			s++;

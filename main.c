@@ -6,13 +6,13 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/12/28 11:15:15 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/02/27 12:38:45 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/03 18:26:42 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include		"42sh.h"
 
-static int		ft_compute(t_token **list, t_list **env)
+int				ft_compute(t_token **list, t_list **env)
 {
 	t_node		*tree;
 
@@ -44,13 +44,15 @@ int				main(int ac, char **av, char **environ)
 	(void)av;
 	list = NULL;
 	env = ft_duplicate(environ);
+	ft_reset_std();
 	if (!env)
 		ft_lstpushback(&env, "PATH=", 5);
 	while (42)
 	{
 		buff = ft_init(buff);
-		ft_lexer(ft_analyser(buff), &list);
+		ft_lexer(ft_analyser(buff), &list, 1);
 		free(buff);
+		ft_get_bquote(&list, &env);
 		if (list)
 			ft_compute(&list, &env);
 	}

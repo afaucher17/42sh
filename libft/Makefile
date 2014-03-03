@@ -6,7 +6,7 @@
 #    By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2013/11/21 16:00:53 by tdieumeg          #+#    #+#              #
-#    Updated: 2014/02/06 15:35:06 by tdieumeg         ###   ########.fr        #
+#    Updated: 2014/03/03 12:23:50 by tdieumeg         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ DEPS	= libft.h
 OBJ		= ft_atoi.o \
 		  ft_bzero.o \
 		  ft_clear_tab.o \
+		  ft_concat.o \
 		  ft_isalnum.o \
 		  ft_isalpha.o \
 		  ft_isascii.o \

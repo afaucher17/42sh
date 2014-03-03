@@ -6,7 +6,7 @@
 #    By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2013/12/27 14:53:18 by tdieumeg          #+#    #+#              #
-#    Updated: 2014/02/27 14:00:42 by tdieumeg         ###   ########.fr        #
+#    Updated: 2014/02/28 11:02:52 by tdieumeg         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,7 @@ OBJ		= main.o \
 		  ft_token_handler.o \
 		  ft_cmd_handler.o \
 		  ft_red_handler.o \
+		  ft_get_bquote.o \
 		  ft_red_open.o \
 		  ft_term_fun.o \
 		  ft_read_keys.o \
