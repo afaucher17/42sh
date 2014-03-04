@@ -6,7 +6,7 @@
 /*   By: tdieumeg <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/22 21:39:01 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/03 14:51:19 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/04 11:22:29 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static t_token	*ft_tokennew(char *data, char type)
 	return (new);
 }
 
-void			ft_tokenpushback(t_token **token, char *data, char type)
+t_token			*ft_tokenpushback(t_token **token, char *data, char type)
 {
 	t_token		*new;
 	t_token		*cur;
@@ -61,13 +61,15 @@ void			ft_tokenpushback(t_token **token, char *data, char type)
 			cur = cur->next;
 		cur->next = new;
 	}
+	return (new);
 }
 
 t_token			*ft_token_split(char *s, char *special)
 {
-	t_token		*list;
 	char		*buff;
 	int			i;
+	t_token		*last;
+	t_token		*list;
 
 	list = NULL;
 	buff = ft_strnew(ft_strlen(s));
@@ -75,18 +77,16 @@ t_token			*ft_token_split(char *s, char *special)
 	while (s && *s)
 		if (ft_strchr(special, *s))
 		{
-			if (buff[0])
-				ft_tokenpushback(&list, ft_strdup(buff), WORD);
+			if (buff[0] && !list)
+				last = ft_tokenpushback(&list, ft_strdup(buff), WORD);
+			else if (buff[0])
+				last = ft_tokenpushback(&last, ft_strdup(buff), WORD);
 			ft_bzero(buff, i);
 			i = 0;
 			s++;
 		}
 		else
-		{
-			buff[i] = *s;
-			i++;
-			s++;
-		}
+			buff[i++] = *s++;
 	free(buff);
 	return (list);
 }

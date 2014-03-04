@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/12/28 16:29:19 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/02/25 17:02:13 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/04 15:25:18 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,11 @@ void				ft_sighandler(int signal)
 		ft_bzero(g_cmd, BUFF_SIZE);
 		g_idx = 0;
 		ft_putstr(PROMPT);
+	}
+	if (signal == SIGUSR1)
+	{
+		ft_reset_term();
+		exit(EXIT_SUCCESS);
 	}
 }
 

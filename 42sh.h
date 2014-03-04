@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/05 12:42:10 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/03 16:28:42 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/04 17:15:48 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include			<stdlib.h>
 # include			<fcntl.h>
 # include			"libft/libft.h"
-# define BUFF_SIZE	512
+# define BUFF_SIZE	8192
 # define COM		0
 # define COM_ARG	1
 # define REDIRECT	2
@@ -34,6 +34,9 @@
 # define DLEFT_RED	9
 # define RIGHT_RED	10
 # define DRIGHT_RED	11
+# define D_AND		12
+# define D_OR		13
+# define LOGIC		14
 # define ALT_U_A	1096489755
 # define ALT_D_A	1113266971
 # define ALT_R_A	1130044187
@@ -85,6 +88,16 @@ typedef	struct		s_keys
 	void			(*f)(t_dlist **, int visual);
 }					t_keys;
 
+enum				e_state
+{
+	L_MAIN = 0,
+	L_SPEC,
+	L_BQUOTEM,
+	L_BQUOTED,
+	L_DQUOTE,
+	L_QUOTE
+};
+
 /*
 ** main.c
 */
@@ -101,6 +114,15 @@ char			*ft_analyser(char *cmd);
 void			ft_lexer(char *str, t_token **list, int save_com);
 
 /*
+** ft_lexer_fun.c
+*/
+char			is_special(char *str);
+void			ft_lexbquote(char **str, char *buf, int *i, t_token **list);
+void			ft_lexdquote(char **str, char *buf, int *i, t_token **list);
+void			ft_lexquote(char **str, char *buf, int *i, t_token **list);
+void			ft_lexmain(char **str, char *buf, int *i, t_token **list);
+
+/*
 ** ft_parser.c
 */
 t_node			*ft_parser(t_token *list);
@@ -115,7 +137,7 @@ char			parse_pipe(t_token **list, t_node **tree);
 */
 int				ft_token_clear(t_token **list);
 char			ft_tokenstep(t_token **list);
-void			ft_tokenpushback(t_token **token, char *data, char type);
+t_token			*ft_tokenpushback(t_token **token, char *data, char type);
 t_token			*ft_token_split(char *s, char *special);
 
 /*
@@ -145,8 +167,12 @@ void			ft_sighand2(int signal);
 /*
 ** ft_builtin.c
 */
-int				ft_builtin(char **cmd, t_list **env, t_node *tree,
-								t_list **list);
+int				ft_builtin(char **cmd, t_list **env);
+
+/*
+** ft_is_builtin.c
+*/
+int				ft_is_builtin(char *cmd);
 
 /*
 ** ft_cdenv.c
@@ -156,7 +182,7 @@ int				ft_cdenv(char **cmd, t_list **env);
 /*
 ** ft_echo.c
 */
-int				ft_echo(char **cmd, t_list **env, t_node *tree, t_list **list);
+int				ft_echo(char **cmd);
 
 /*
 ** ft_notfnd.c

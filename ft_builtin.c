@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/12/28 17:22:09 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/02 18:50:27 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/04 15:24:27 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,17 +91,14 @@ static int			ft_remenv(char **cmd, t_list **env)
 	return (1);
 }
 
-int					ft_builtin(char **cmd, t_list **env, t_node *tree,
-									t_list **fdlist)
+int					ft_builtin(char **cmd, t_list **env)
 {
-	(void)tree;
-	(void)fdlist;
 	if (env)
 	{
 		if (ft_strequ(cmd[0], "exit"))
 		{
 			ft_list_clear(env);
-			ft_reset_term();
+			kill(0, SIGUSR1);
 			exit(EXIT_SUCCESS);
 		}
 		if (ft_strequ(cmd[0], "env"))
@@ -117,7 +114,7 @@ int					ft_builtin(char **cmd, t_list **env, t_node *tree,
 		if (ft_strequ(cmd[0], "cd"))
 			return (ft_cdenv(cmd, env));
 		if (ft_strequ(cmd[0], "echo"))
-			return (ft_echo(cmd, env, tree, fdlist));
+			return (ft_echo(cmd));
 	}
 	return (0);
 }

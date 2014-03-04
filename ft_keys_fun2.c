@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/06 12:16:52 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/02/27 14:32:30 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/04 16:47:46 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void				ft_u_arrow(t_dlist **list, int visual)
 	visual = 0;
 	if (*list && (*list)->next)
 	{
+		free((*list)->content);
+		(*list)->content = ft_strdup(g_cmd);
 		*list = (*list)->next;
 		ft_get_copy()->visual_mode = 0;
 		ft_end(list, visual);
@@ -38,6 +40,8 @@ void				ft_d_arrow(t_dlist **list, int visual)
 	visual = 0;
 	if (*list && (*list)->prev)
 	{
+		free((*list)->content);
+		(*list)->content = ft_strdup(g_cmd);
 		(*list) = (*list)->prev;
 		ft_get_copy()->visual_mode = 0;
 		ft_end(list, visual);

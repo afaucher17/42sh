@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/12/28 15:05:05 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/02/04 14:09:02 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/04 12:09:17 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_list				*ft_duplicate(char **environ)
 	i = 0;
 	while (environ[i])
 	{
-		ft_lstpushback(&env, environ[i], ft_strlen(environ[i]));
+		ft_lstpushback(&env, environ[i], ft_strlen(environ[i]) + 1);
 		i++;
 	}
 	return (env);

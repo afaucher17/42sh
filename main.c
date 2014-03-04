@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/12/28 11:15:15 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/03 18:26:42 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/04 18:03:05 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,12 @@ int				main(int ac, char **av, char **environ)
 	
 	(void)ac;
 	(void)av;
+	buff = NULL;
 	list = NULL;
 	env = ft_duplicate(environ);
 	ft_reset_std();
 	if (!env)
-		ft_lstpushback(&env, "PATH=", 5);
+		exit(!ft_putendl_fd("42sh: Restore environment before execution.", 2));
 	while (42)
 	{
 		buff = ft_init(buff);

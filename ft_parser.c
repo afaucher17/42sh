@@ -6,18 +6,64 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/24 14:18:26 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/02/26 13:00:29 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/04 18:45:57 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "42sh.h"
 
-char			parse_expr(t_token **list, t_node **tree)
+static int			is_logic(char *str, t_node *node)
 {
-	t_node		*node;
-	t_token		*save;
+	if (node->type == D_AND || node->type == D_OR)
+		return (1);
+	if (ft_strequ(str, "&&"))
+	{
+		node->type = D_AND;
+		return (1);
+	}
+	if (ft_strequ(str, "||"))
+	{
+		node->type = D_OR;
+		return (1);
+	}
+	return (0);
+}
 
-	if ((node = ft_nodenew(EXPR)) != NULL && parse_pipe(list, &node->left))
+static char			parse_logic(t_token **list, t_node **tree)
+{
+	t_node			*node;
+	t_token			*save;
+
+	if ((node = ft_nodenew(LOGIC)) != NULL && parse_pipe(list, &node->left))
+	{
+		save = *list;
+		if (ft_tokenstep(list) && is_logic((*list)->data, node)
+			&& (*list)->type == SPECIAL)
+		{
+			if (!ft_tokenstep(list) || !parse_logic(list, &node->right))
+				return (!ft_clear_tree(&node));
+		}
+		else
+			*list = save;
+		if (node->right)
+			*tree = node;
+		else
+		{
+			*tree = node->left;
+			free(node);
+			free(node->data);
+		}
+		return (1);
+	}
+	return (!ft_clear_tree(&node));
+}
+
+static char			parse_expr(t_token **list, t_node **tree)
+{
+	t_node			*node;
+	t_token			*save;
+
+	if ((node = ft_nodenew(EXPR)) != NULL && parse_logic(list, &node->left))
 	{
 		save = *list;
 		if (ft_tokenstep(list) && ft_strcmp((*list)->data, ";") == 0
@@ -37,9 +83,9 @@ char			parse_expr(t_token **list, t_node **tree)
 	return (0);
 }
 
-t_node		*ft_parser(t_token *list)
+t_node				*ft_parser(t_token *list)
 {
-	t_node	*tree;
+	t_node			*tree;
 
 	tree = NULL;
 	if (list == NULL)

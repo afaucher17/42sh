@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/24 14:31:16 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/02/04 15:44:57 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/04 17:55:19 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ char			parse_pipe(t_token **list, t_node **tree)
 	if ((node = ft_nodenew(PIPE_EXP)) != NULL && parse_com(list, &node->left))
 	{
 		save = *list;
-		if (ft_tokenstep(list) && ft_strcmp((*list)->data, "|") == 0
+		if (ft_tokenstep(list) && ft_strequ((*list)->data, "|")
 				&& (*list)->type == SPECIAL)
 		{
 			if (!ft_tokenstep(list) || !parse_pipe(list, &node->right))
