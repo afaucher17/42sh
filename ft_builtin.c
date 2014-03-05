@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/12/28 17:22:09 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/04 15:24:27 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/05 11:17:08 by jlinden          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int					ft_builtin(char **cmd, t_list **env)
 		if (ft_strequ(cmd[0], "exit"))
 		{
 			ft_list_clear(env);
-			kill(0, SIGUSR1);
+			kill(getppid(), SIGUSR1);
 			exit(EXIT_SUCCESS);
 		}
 		if (ft_strequ(cmd[0], "env"))
