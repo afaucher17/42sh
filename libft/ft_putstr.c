@@ -6,13 +6,13 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/12/27 13:02:26 by tdieumeg          #+#    #+#             */
-/*   Updated: 2013/12/27 13:14:02 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/06 14:32:29 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include		"libft.h"
 
-void			ft_putstr(char const *str)
+int				ft_putstr(char const *str)
 {
-	write(1, str, ft_strlen(str));
+	return (write(1, str, ft_strlen(str)));
 }

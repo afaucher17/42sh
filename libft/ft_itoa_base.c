@@ -1,30 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strsub.c                                        :+:      :+:    :+:   */
+/*   ft_itoa_base.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2013/11/22 18:02:51 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/06 15:44:51 by tdieumeg         ###   ########.fr       */
+/*   Created: 2014/03/06 14:55:38 by tdieumeg          #+#    #+#             */
+/*   Updated: 2014/03/06 15:03:37 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include	<string.h>
 #include	"libft.h"
 
-char		*ft_strsub(char const *s, unsigned int start, size_t len)
+char		*ft_itoa_base(int n, int base)
 {
-	char	*sub;
-
-	sub = ft_strnew(len);
-	if (sub == NULL)
-		return (NULL);
-	while (start > 0)
+	int             digit;
+	const char      *tab = "0123456789abcdef";
+	unsigned long   numb;
+	char            *str;
+	
+	digit = 0;
+	numb = n;
+	while (n >= base)
 	{
-		s++;
-		start--;
+		digit++;
+		n /= base;
 	}
-	sub = ft_strncpy(sub, s, len);
-	return (sub);
+	str = ft_strnew(digit);
+	str[digit + 1] = '\0';
+	while (digit >= 0)
+	{
+		str[digit] = tab[numb % base];
+		digit--;
+		numb /= base;
+	}
+	return (str);
 }

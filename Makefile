@@ -6,13 +6,13 @@
 #    By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2013/12/27 14:53:18 by tdieumeg          #+#    #+#              #
-#    Updated: 2014/03/05 16:51:29 by tdieumeg         ###   ########.fr        #
+#    Updated: 2014/03/06 19:39:50 by tdieumeg         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= 42sh
 
-CC		= /usr/bin/cc
+CC		= gcc
 
 DEPS	= 42sh.h
 
@@ -28,6 +28,7 @@ OBJ		= main.o \
 		  ft_is_builtin.o \
 		  ft_cdenv.o \
 		  ft_echo.o \
+		  ft_echo_utf.o \
 		  ft_chdir.o \
 		  ft_checkpath.o \
 		  ft_envman.o \
@@ -48,7 +49,7 @@ OBJ		= main.o \
 		  ft_error.o \
 		  ft_utility_fun.o 
 
-CFLAGS	= -Wall -Wextra -Werror -g
+CFLAGS	= -Wall -Wextra -Werror
 
 HEADERS	= -I. -Ilibft/
 

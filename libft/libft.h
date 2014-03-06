@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/11/23 16:14:12 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/03 12:24:27 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/06 15:31:42 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct		s_dlist
 }					t_dlist;
 
 int				ft_atoi(const char *str);
+int				ft_atoi_base(const char *str, int base);
 void			ft_bzero(void *s, size_t n);
 int				ft_clear_tab(char **t);
 char			*ft_concat(t_list *list);
@@ -42,6 +43,7 @@ int				ft_isascii(int c);
 int				ft_isdigit(int c);
 int				ft_isprint(int c);
 char			*ft_itoa(int n);
+char			*ft_itoa_base(int n, int base);
 t_dlist			*ft_dlstnew(void *content, size_t content_size);
 void			ft_dlstpushfront(t_dlist **list,
 						void *content, size_t content_size);
@@ -73,7 +75,7 @@ void			ft_putnbr(int nb);
 void			ft_putnbr_fd(int nb, int fd);
 int				ft_putnbr_endl(int nb);
 int				ft_putnbr_endl_fd(int nb, int fd);
-void			ft_putstr(char const *s);
+int				ft_putstr(char const *s);
 void			ft_putstr_fd(char const *s, int fd);
 char			*ft_strcat(char *s1, const char *s2);
 char			*ft_strchr(const char *s, int c);

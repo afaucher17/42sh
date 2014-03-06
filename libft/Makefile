@@ -6,7 +6,7 @@
 #    By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2013/11/21 16:00:53 by tdieumeg          #+#    #+#              #
-#    Updated: 2014/03/03 12:23:50 by tdieumeg         ###   ########.fr        #
+#    Updated: 2014/03/06 15:17:12 by tdieumeg         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ CC		= /usr/bin/gcc
 DEPS	= libft.h
 
 OBJ		= ft_atoi.o \
+		  ft_atoi_base.o \
 		  ft_bzero.o \
 		  ft_clear_tab.o \
 		  ft_concat.o \
@@ -26,6 +27,7 @@ OBJ		= ft_atoi.o \
 		  ft_isdigit.o \
 		  ft_isprint.o \
 		  ft_itoa.o \
+		  ft_itoa_base.o \
 		  ft_memalloc.o \
 		  ft_memccpy.o \
 		  ft_memchr.o \

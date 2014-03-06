@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/06 12:04:11 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/04 16:45:53 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/06 14:46:07 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void			ft_delete(t_dlist **list, int visual)
 		ft_putchar(' ');
 		tputs(tgetstr("le", NULL), 1, ft_putchar_tc);
 		if (((g_idx + ft_strlen(PROMPT))
-			% ft_get_winsz()->ws_col) == ft_get_winsz()->ws_col - 1)
+			% ft_get_winsz()->ws_col) == (u_int)(ft_get_winsz()->ws_col - 1))
 			tputs(tgetstr("nd", NULL), 1, ft_putchar_tc);
 		while (g_idx > 0 && g_idx > j)
 			ft_l_arrow(list, 0);
@@ -64,7 +64,7 @@ void			ft_end(t_dlist **list, int visual)
 void			ft_ctrl_d(t_dlist **list, int visual)
 {
 	g_idx = 0;
-	visual = 0;
+	(void)visual;
 	ft_dlist_clear(list);
 	free(g_cmd);
 	ft_putendl("");

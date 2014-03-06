@@ -6,7 +6,7 @@
 /*   By: tdieumeg <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/08/15 22:45:22 by tdieumeg          #+#    #+#             */
-/*   Updated: 2013/11/26 14:39:23 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/06 15:04:03 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int			ft_atoi(const char *str)
 	while (str[i] <= '9' && str[i] >= '0')
 	{
 		result = result * 10;
-		result = result + (str[i] - 48);
+		result = result + (str[i] - '0');
 		i++;
 	}
 	result = result * is_neg;

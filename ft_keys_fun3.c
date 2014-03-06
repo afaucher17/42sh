@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/06 12:27:20 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/02/26 18:46:17 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/06 14:46:41 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void				ft_alt_r_arrow(t_dlist **list, int visual)
 
 void				ft_return(t_dlist **list, int visual)
 {
-	visual = 0;
+	(void)visual;
 	ft_get_copy()->visual_mode = 0;
 	tputs(tgetstr("me", NULL), 1, ft_putchar_tc);
 	ft_end(list, 0);
