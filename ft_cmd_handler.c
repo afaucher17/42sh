@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/15 14:46:12 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/04 18:00:50 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/05 17:21:25 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ static void		ft_son(int builtin, char **cmd, char **charenv)
 	t_list		*envdup;
 
 	signal(SIGINT, SIG_DFL);
+	if (!cmd)
+		exit(EXIT_SUCCESS);
 	if (!builtin)
 	{
 		ft_reset_term();

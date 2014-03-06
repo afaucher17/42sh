@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/05 12:42:10 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/04 17:15:48 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/05 18:04:23 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@
 # define D_AND		12
 # define D_OR		13
 # define LOGIC		14
+# define VAR		15
 # define ALT_U_A	1096489755
 # define ALT_D_A	1113266971
 # define ALT_R_A	1130044187
@@ -277,5 +278,10 @@ int				ft_putchar_tc(int c);
 */
 t_dlist			*ft_log_to_dlist(void);
 void			ft_append_cmd_to_log(char *cmd);
+
+/*
+** ft_error.c
+*/
+void			ft_error(char *filename, char *error);
 
 #endif				/* !_42SH_H */

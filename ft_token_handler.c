@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/25 13:06:24 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/04 19:02:04 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/05 16:35:08 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ char			**ft_arg_handler(t_node *tree, char *cmd)
 	t_node		*save;
 	int			i;
 
+	if (!cmd)
+		return (NULL);
 	save = tree;
 	i = 0;
 	while ((save = save->right) != NULL)

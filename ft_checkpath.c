@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/12/28 13:49:34 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/02/19 11:47:58 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/05 16:57:43 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ char			*ft_checkpath(char *cmd, char **environ)
 	int			i;
 
 	i = 0;
+	if (!cmd)
+		return (NULL);
 	if (!access(cmd, F_OK))
 		return (ft_strdup(cmd));
 	while (environ[i] && !ft_strnequ(environ[i], "PATH", 4))

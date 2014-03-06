@@ -1,30 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_echo.c                                          :+:      :+:    :+:   */
+/*   ft_error.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/02/25 17:25:52 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/05 19:08:39 by tdieumeg         ###   ########.fr       */
+/*   Created: 2014/03/05 16:46:20 by tdieumeg          #+#    #+#             */
+/*   Updated: 2014/03/05 16:51:58 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "42sh.h"
 
-int			ft_echo(char **cmd)
+void		ft_error(char *filename, char *error)
 {
-	int		i;
-
-	i = (cmd[1] && ft_strequ(cmd[1], "-n")) ? 2 : 1;
-	while (cmd[i])
-	{
-		ft_putstr(cmd[i]);
-		if (cmd[i + 1])
-			ft_putstr(" ");
-		i++;
-	}
-	if (!(cmd[1] && ft_strequ(cmd[1], "-n")))
-		ft_putchar('\n');
-	return (1);
+	ft_putstr_fd("42sh: ", 2);
+	ft_putstr_fd(filename, 2);
+	ft_putstr_fd(": ", 2);
+	ft_putendl_fd(error, 2);
+	exit(EXIT_FAILURE);
 }

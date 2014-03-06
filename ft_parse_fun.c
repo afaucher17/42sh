@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/24 14:31:16 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/04 17:55:19 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/06 14:13:50 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,23 +58,24 @@ static char		parse_com(t_token **list, t_node **tree)
 {
 	t_node		*node;
 	t_token		*save;
+	int			red;
+	int			com;
 
 	save = *list;
 	if ((node = ft_nodenew(COM)) == NULL)
 		return (0);
-	if (parse_redirect(list, &node->left))
-		ft_tokenstep(list);
-	if ((*list) && (*list)->type == WORD)
+	if ((red = (parse_redirect(list, &node->left))))
+		save = *list;
+	if ((com = ((!red || ft_tokenstep(list)) && (*list)->type == WORD)))
 	{
 		node->data = ft_strdup((*list)->data);
 		save = *list;
 		while (ft_tokenstep(list) && (parse_redirect(list, &node->left)
 					|| parse_arg(list, &node->right)))
 			save = *list;
-		*list = save;
-		*tree = node;
-		return (1);
 	}
+	if ((red || com) && (*list = save) && (*tree = node))
+		return (1);
 	ft_clear_tree(&node);
 	*list = save;
 	return (0);

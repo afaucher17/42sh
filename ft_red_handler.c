@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/25 13:20:14 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/02 13:46:58 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/05 17:13:38 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,9 @@ static int		ft_drred_handler(t_node *tree, t_list **list)
 {
 	int			fd;
 
-	fd = open(tree->data, O_WRONLY | O_APPEND |
-			O_CREAT, S_IRUSR | S_IWUSR | S_IRGRP);
+	if ((fd = open(tree->data, O_WRONLY | O_APPEND |
+			O_CREAT, S_IRUSR | S_IWUSR | S_IRGRP)) == -1)
+		ft_error(tree->data, "Permission denied");
 	ft_lstadd(list, ft_lstnew(&fd, sizeof(int)));
 	dup2(fd, 1);
 	return (1);
@@ -27,8 +28,9 @@ static int		ft_rred_handler(t_node *tree, t_list **list)
 {
 	int			fd;
 
-	fd = open(tree->data, O_WRONLY | O_TRUNC |
-			O_CREAT, S_IRUSR | S_IWUSR | S_IRGRP);
+	if ((fd = open(tree->data, O_WRONLY | O_TRUNC |
+			O_CREAT, S_IRUSR | S_IWUSR | S_IRGRP)) == -1)
+		ft_error(tree->data, "Permission denied");
 	ft_lstadd(list, ft_lstnew(&fd, sizeof(int)));
 	dup2(fd, 1);
 	return (1);
@@ -39,20 +41,23 @@ static int		ft_dlred_handler(t_node *tree)
 	int			fd;
 	char		*buff;
 
-	fd = open(".dump", O_WRONLY |
-			O_CREAT, S_IRUSR | S_IWUSR | S_IRGRP | O_TRUNC);
+	if ((fd = open(".dump", O_WRONLY |
+			O_CREAT, S_IRUSR | S_IWUSR | S_IRGRP | O_TRUNC)) == -1)
+		ft_error(".dump", "Permission denied");
 	while (42)
 	{
 		ft_putstr("heredoc> ");
-		buff = ft_read_keys(NULL);
+		buff = ft_read_keys(ft_log_to_dlist());
 		ft_bzero(g_cmd, BUFF_SIZE);
 		g_idx = 0;
 		if (ft_strnequ(buff, tree->data, ft_strlen(buff) - 1))
 			break ;
 		ft_putstr_fd(buff, fd);
+		free(buff);
 	}
 	close(fd);
-	fd = open(".dump", O_RDONLY);
+	if ((fd = open(".dump", O_RDONLY)) == -1)
+		ft_error(".dump", "Permission denied");
 	dup2(fd, 0);
 	unlink("./.dump");
 	return (1);
@@ -62,7 +67,8 @@ static int		ft_lred_handler(t_node *tree, t_list **list)
 {
 	int			fd;
 
-	fd = open(tree->data, O_RDONLY);
+	if ((fd = open(tree->data, O_RDONLY)) == -1)
+		ft_error(tree->data, "No such file or directory");
 	ft_lstadd(list, ft_lstnew(&fd, sizeof(int)));
 	dup2(fd, 0);
 	return (1);

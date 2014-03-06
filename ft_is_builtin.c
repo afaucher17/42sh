@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/04 11:57:10 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/04 15:19:19 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/05 16:33:15 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int				ft_is_builtin(char *cmd)
 	char		*builtin[6] = {
 		"exit", "unsetenv", "setenv", "env", "cd", "echo"};
 
+	if (!cmd)
+		return (0);
 	i = 0;
 	while (i < 6)
 	{
