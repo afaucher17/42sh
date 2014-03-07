@@ -1,31 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_chdir.c                                         :+:      :+:    :+:   */
+/*   ft_count_tab.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2013/12/29 13:50:40 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/02/04 14:08:27 by tdieumeg         ###   ########.fr       */
+/*   Created: 2014/03/07 14:31:57 by tdieumeg          #+#    #+#             */
+/*   Updated: 2014/03/07 14:33:16 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include		"42sh.h"
+#include	"libft.h"
 
-int				ft_chdir(char *split)
+int			ft_count_tab(char **t)
 {
-	if (!access(split, F_OK))
-	{
-		if (!access(split, X_OK))
-		{
-			chdir(split);
-			return (1);
-		}
-		ft_putstr_fd(split, 2);
-		ft_putendl_fd(": Permission denied.", 2);
-		return (0);
-	}
-	ft_putstr_fd(split, 2);
-	ft_putendl_fd(": No such file or directory.", 2);
-	return (0);
+	int		i;
+
+	i = 0;
+	while (t[i])
+		i++;
+	return (i);
 }

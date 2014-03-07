@@ -1,30 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_clear_tab.c                                     :+:      :+:    :+:   */
+/*   ft_pfd_manage.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/02/03 15:37:18 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/07 17:35:32 by tdieumeg         ###   ########.fr       */
+/*   Created: 2014/03/07 12:57:10 by tdieumeg          #+#    #+#             */
+/*   Updated: 2014/03/07 17:49:13 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include			"libft.h"
+#include			"42sh.h"
 
-int					ft_clear_tab(char **tab)
+void		ft_pfd_manage(int *pfd, int *pfd2)
 {
-	int				i;
-
-	i = 0;
-	if (tab)
+	if (pfd == NULL && pfd2 != NULL)
 	{
-		while (tab[i])
-		{
-			free(tab[i]);
-			i++;
-		}
-		free(tab);
+		close(pfd2[0]);
+		dup2(pfd2[1], 1);
 	}
-	return (1);
+	if (pfd != NULL && pfd2 != NULL)
+	{
+		close(pfd[1]);
+		dup2(pfd[0], 0);
+		close(pfd2[0]);
+		dup2(pfd2[1], 1);
+	}
+	if (pfd != NULL && pfd2 == NULL)
+	{
+		close(pfd[1]);
+		dup2(pfd[0], 0);
+	}
+}
+
+void		ft_pfd_close(int *pfd)
+{
+	if (pfd)
+	{
+		close(pfd[0]);
+		close(pfd[1]);
+	}
 }

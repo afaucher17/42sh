@@ -6,7 +6,7 @@
 #    By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2013/11/21 16:00:53 by tdieumeg          #+#    #+#              #
-#    Updated: 2014/03/06 15:17:12 by tdieumeg         ###   ########.fr        #
+#    Updated: 2014/03/07 14:33:35 by tdieumeg         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ OBJ		= ft_atoi.o \
 		  ft_bzero.o \
 		  ft_clear_tab.o \
 		  ft_concat.o \
+		  ft_count_tab.o \
 		  ft_isalnum.o \
 		  ft_isalpha.o \
 		  ft_isascii.o \

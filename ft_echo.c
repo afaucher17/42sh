@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/25 17:25:52 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/06 19:54:07 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/07 18:09:36 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,11 +110,13 @@ static int					ft_getoptions(char **cmd, int *res)
 	return (i - 1);
 }
 
-int							ft_echo(char **cmd)
+int							ft_echo(char **cmd, t_list **env, t_list **fdlist)
 {
 	int						i;
 	int						op[3] = {0, 0, 0};
 
+	(void)env;
+	(void)fdlist;
 	i = 1 + ft_getoptions(cmd, op);
 	while (cmd[i])
 	{

@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/06 19:37:44 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/06 19:40:08 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/07 18:24:15 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ void						ft_itoutf(int nb)
 	ft_memset(sequence, '0', bocp[bound]);
 	str = ft_itoa_base(nb, 2);
 	ft_strcpy(sequence + (bocp[bound] - ft_strlen(str)), str);
+	free(str);
 	res = ft_solver(bound + 1, sequence);
 	ft_putstr(res);
 	free(res);

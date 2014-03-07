@@ -6,7 +6,7 @@
 #    By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2013/12/27 14:53:18 by tdieumeg          #+#    #+#              #
-#    Updated: 2014/03/06 19:39:50 by tdieumeg         ###   ########.fr        #
+#    Updated: 2014/03/07 17:10:37 by tdieumeg         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,15 +26,15 @@ OBJ		= main.o \
 		  ft_node.o \
 		  ft_builtin.o \
 		  ft_is_builtin.o \
-		  ft_cdenv.o \
+		  ft_cd.o \
 		  ft_echo.o \
 		  ft_echo_utf.o \
-		  ft_chdir.o \
 		  ft_checkpath.o \
 		  ft_envman.o \
 		  ft_notfnd.o \
 		  ft_sighandler.o \
 		  ft_token_handler.o \
+		  ft_pfd_manage.o \
 		  ft_cmd_handler.o \
 		  ft_red_handler.o \
 		  ft_get_bquote.o \

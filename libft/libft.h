@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/11/23 16:14:12 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/06 15:31:42 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/07 14:34:05 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include		<string.h>
 # include		<unistd.h>
 # include		<stdlib.h>
+# include		<stdarg.h>
 
 typedef struct		s_list
 {
@@ -37,6 +38,7 @@ int				ft_atoi_base(const char *str, int base);
 void			ft_bzero(void *s, size_t n);
 int				ft_clear_tab(char **t);
 char			*ft_concat(t_list *list);
+int				ft_count_tab(char **t);
 int				ft_isalnum(int c);
 int				ft_isalpha(int c);
 int				ft_isascii(int c);
@@ -88,6 +90,7 @@ int				ft_strequ(char const *s1, char const *s2);
 void			ft_striter(char *s, void (*f)(char *));
 void			ft_striteri(char *s, void (*f)(unsigned int, char *));
 char			*ft_strjoin(char const *s1, char const *s2);
+char			*ft_strjoinx(int nb, ...);
 size_t			ft_strlcat(char *dst, const char *src, size_t size);
 size_t			ft_strlcpy(char *dst, char *src, size_t size);
 size_t			ft_strlen(const char *s);

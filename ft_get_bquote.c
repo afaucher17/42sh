@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/28 10:14:03 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/04 11:24:04 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/07 18:28:43 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ static char		*ft_bq_father(int *pfd, t_token **bquote, int pid)
 	return (results);
 }
 
-static t_token	*ft_if_bq(t_token **bquote, t_list **env, t_token **save)
+static t_token	*ft_if_bq(t_token **bquote, t_list **env, t_token **save,
+							t_token *next)
 {
 	int			pid;
 	int			pfd[2];
@@ -64,21 +65,19 @@ static t_token	*ft_if_bq(t_token **bquote, t_list **env, t_token **save)
 	if (pid == 0)
 		ft_bq_son(pfd, bquote, env);
 	else
-	{
-		free(results);
 		results = ft_bq_father(pfd, bquote, pid);
-	}
 	list = ft_token_split(results, "\n \t");
 	tmp = list;
 	free(results);
+	free(*save);
 	if (tmp)
 	{
 		while (tmp->next)
 			tmp = tmp->next;
-		tmp->next = (*save)->next;
+		tmp->next = next;
 		return (*save = list);
 	}
-	return (*save = (*save)->next);
+	return (*save = next);
 }
 
 void			ft_get_bquote(t_token **list, t_list **env)
@@ -100,9 +99,9 @@ void			ft_get_bquote(t_token **list, t_list **env)
 			if (bquote)
 			{
 				if (prev != NULL)
-					prev->next = ft_if_bq(&bquote, env, &save);
+					prev->next = ft_if_bq(&bquote, env, &save, save->next);
 				else
-					*list = ft_if_bq(&bquote, env, &save);
+					*list = ft_if_bq(&bquote, env, &save, save->next);
 			}
 		}
 		prev = save;

@@ -6,63 +6,49 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/15 14:46:12 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/05 17:21:25 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/07 17:59:59 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include			"42sh.h"
+#include		"42sh.h"
 
-static void		ft_pfd_manage(int *pfd, int *pfd2)
+char			**ft_arg_handler(t_node *tree, char *cmd)
 {
-	if (pfd == NULL && pfd2 != NULL)
+	char		**com;
+	t_node		*save;
+	int			i;
+
+	if (!cmd)
+		return (NULL);
+	save = tree;
+	i = 0;
+	while ((save = save->right) != NULL)
+		i++;
+	com = (char**)malloc(sizeof(char*) * (i + 2));
+	i = 1;
+	com[0] = ft_strdup(cmd);
+	free(cmd);
+	while ((tree = tree->right) != NULL)
 	{
-		close(pfd2[0]);
-		dup2(pfd2[1], 1);
+		com[i] = ft_strdup(tree->data);
+		i++;
 	}
-	if (pfd != NULL && pfd2 != NULL)
-	{
-		close(pfd[1]);
-		dup2(pfd[0], 0);
-		close(pfd2[0]);
-		dup2(pfd2[1], 1);
-	}
-	if (pfd != NULL && pfd2 == NULL)
-	{
-		close(pfd[1]);
-		dup2(pfd[0], 0);
-	}
+	com[i] = NULL;
+	return (com);
 }
 
-static void		ft_pfd_close(int *pfd)
+static void		ft_son(char **cmd, char **charenv, t_node *tree,
+						t_list **fdlist)
 {
-	if (pfd)
-	{
-		close(pfd[0]);
-		close(pfd[1]);
-	}
-}
-
-static void		ft_son(int builtin, char **cmd, char **charenv)
-{
-	t_list		*envdup;
-
+	if (!ft_red_handler(tree->left, fdlist))
+		exit(EXIT_FAILURE);
 	signal(SIGINT, SIG_DFL);
 	if (!cmd)
 		exit(EXIT_SUCCESS);
-	if (!builtin)
-	{
-		ft_reset_term();
-		execve(cmd[0], cmd, charenv);
-		ft_notfnd(cmd[0]);
-		exit(EXIT_FAILURE);
-	}
-	else
-	{
-		envdup = ft_duplicate(charenv);
-		ft_builtin(cmd, &envdup);
-		ft_list_clear(&envdup);
-	}
-	exit(EXIT_SUCCESS);
+	ft_reset_term();
+	execve(cmd[0], cmd, charenv);
+	ft_notfnd(cmd[0]);
+	exit(EXIT_FAILURE);
 }
 
 static int		ft_father(int *pfd, char ***cmd, char ***charenv,
@@ -86,29 +72,27 @@ static int		ft_father(int *pfd, char ***cmd, char ***charenv,
 int				ft_cmd_handler(t_node *tree, t_list **env, int *pfd, int *pfd2)
 {
 	pid_t		pid;
-	int			builtin;
 	char		**cmd;
 	char		**charenv;
 	t_list		*fdlist;
 
 	fdlist = NULL;
 	charenv = ft_tochar(*env);
-	builtin = ft_is_builtin(tree->data);
-	if (!builtin)
+	if (!ft_is_builtin(tree->data))
 		cmd = ft_arg_handler(tree, ft_checkpath(tree->data, charenv));
 	else
-		cmd = ft_arg_handler(tree, ft_strdup(tree->data));
+	{
+		ft_clear_tab(charenv);
+		return (ft_builtin(env, &fdlist, tree));
+	}
 	if ((pid = fork()) < 0)
 		return (0);
 	if (pid == 0)
 	{
 		ft_pfd_manage(pfd, pfd2);
-		ft_red_handler(tree->left, &fdlist);
-		ft_son(builtin, cmd, charenv);
+		ft_son(cmd, charenv, tree, &fdlist);
 	}
 	else
 		return (ft_father(pfd, &cmd, &charenv, &fdlist));
 	return (0);
 }
-
-

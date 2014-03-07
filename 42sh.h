@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/05 12:42:10 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/06 19:39:36 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/07 18:11:50 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,12 @@ typedef	struct		s_keys
 	void			(*f)(t_dlist **, int visual);
 }					t_keys;
 
+typedef struct		s_builtin
+{
+	char			*cmd;
+	int				(*f)(char **, t_list **, t_list **);
+}					t_builtin;
+
 enum				e_state
 {
 	L_MAIN = 0,
@@ -157,6 +163,7 @@ char			*ft_checkpath(char *split, char **environ);
 ** ft_envman.c
 */
 t_list			*ft_duplicate(char **environ);
+t_list			*ft_get_env(char *get, t_list *env);
 char			**ft_tochar(t_list *env);
 
 /*
@@ -168,7 +175,7 @@ void			ft_sighand2(int signal);
 /*
 ** ft_builtin.c
 */
-int				ft_builtin(char **cmd, t_list **env);
+int				ft_builtin(t_list **env, t_list **fdlist, t_node *tree);
 
 /*
 ** ft_is_builtin.c
@@ -176,14 +183,14 @@ int				ft_builtin(char **cmd, t_list **env);
 int				ft_is_builtin(char *cmd);
 
 /*
-** ft_cdenv.c
+** ft_cd.c
 */
-int				ft_cdenv(char **cmd, t_list **env);
+int				ft_cd(char **cmd, t_list **env, t_list **fdlist);
 
 /*
 ** ft_echo.c
 */
-int				ft_echo(char **cmd);
+int				ft_echo(char **cmd, t_list **env, t_list **fdlist);
 
 /*
 ** ft_echo_utf.c
@@ -196,13 +203,15 @@ void			ft_itoutf(int nb);
 void			ft_notfnd(char *cmd);
 
 /*
-** ft_chdir.c
+** ft_pfd_manage.c 
 */
-int				ft_chdir(char *cmd);
+void			ft_pfd_manage(int *pfd, int *pfd2);
+void			ft_pfd_close(int *pfd);
 
 /*
 ** ft_cmd_handler.c
 */
+char			**ft_arg_handler(t_node *tree, char *cmd);
 int				ft_cmd_handler(t_node *tree, t_list **env, int *pfd,
 									int *pfd2);
 
@@ -219,7 +228,6 @@ int				ft_red_open(t_node *tree);
 /*
 ** ft_token_handler.c
 */
-char			**ft_arg_handler(t_node *tree, char *cmd);
 int				ft_expr_handler(t_node *tree, t_list **env);
 
 /*
@@ -287,6 +295,6 @@ void			ft_append_cmd_to_log(char *cmd);
 /*
 ** ft_error.c
 */
-void			ft_error(char *filename, char *error);
+int				ft_error(char *filename, char *error);
 
 #endif				/* !_42SH_H */
