@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/12/28 11:15:15 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/05 17:10:15 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/07 21:20:24 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,35 @@ static char		*ft_init(char *buff)
 	return (buff);
 }
 
+void			ft_checktty(t_list **env)
+{
+	char		buff[BUFF_SIZE];
+	char		*join;
+	char		*tmp;
+	t_token		*list;
+	int			len;
+
+	list = NULL;
+	join = NULL;
+	ft_bzero(buff, BUFF_SIZE);
+	if (!isatty(0))
+	{
+		while ((len = read(0, buff, BUFF_SIZE - 1)) > 0)
+		{
+			buff[len] = '\0';
+			tmp = join;
+			join = ft_strjoin(tmp, buff);
+			free(tmp);
+		}
+		ft_lexer(join, &list, 0);
+		free(join);
+		ft_get_bquote(&list, env);
+		if (list)
+			ft_compute(&list, env);
+		exit(EXIT_SUCCESS);
+	}
+}
+
 int				main(int ac, char **av, char **environ)
 {
 	char		*buff;
@@ -48,6 +77,7 @@ int				main(int ac, char **av, char **environ)
 	ft_reset_std();
 	if (!env)
 		exit(!ft_putendl_fd("42sh: Restore environment before execution.", 2));
+	ft_checktty(&env);
 	while (42)
 	{
 		buff = ft_init(buff);
