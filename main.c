@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/12/28 11:15:15 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/07 21:20:24 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/08 21:32:58 by afaucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ static char		*ft_init(char *buff)
 	ft_putstr(PROMPT);
 	ft_set_term();
 	buff = ft_read_keys(ft_log_to_dlist());
+	ft_reset_term();
 	ft_bzero(g_cmd, BUFF_SIZE);
 	g_idx = 0;
 	return (buff);
