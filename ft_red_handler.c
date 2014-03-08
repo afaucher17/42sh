@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/25 13:20:14 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/07 18:01:41 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/08 21:32:20 by afaucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,9 @@ static int		ft_dlred_handler(t_node *tree)
 	while (42)
 	{
 		ft_putstr("heredoc> ");
+		ft_set_term();
 		buff = ft_read_keys(ft_log_to_dlist());
+		ft_reset_term();
 		ft_bzero(g_cmd, BUFF_SIZE);
 		g_idx = 0;
 		if (ft_strnequ(buff, tree->data, ft_strlen(buff) - 1))

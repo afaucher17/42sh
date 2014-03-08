@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/25 13:06:24 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/07 13:01:48 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/08 21:28:38 by afaucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,7 @@ int				ft_expr_handler(t_node *tree, t_list **env)
 	if (!tree)
 		return (0);
 	if (tree->left)
-	{
-		ft_red_open(tree->left);
 		ft_logic_handler(tree->left, env, 0, D_OR);
-	}
 	if (tree->right)
 		ft_expr_handler(tree->right, env);
 	return (1);

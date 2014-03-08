@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/15 14:46:12 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/07 17:59:59 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/08 21:33:12 by afaucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,12 @@ static void		ft_son(char **cmd, char **charenv, t_node *tree,
 	signal(SIGINT, SIG_DFL);
 	if (!cmd)
 		exit(EXIT_SUCCESS);
-	ft_reset_term();
 	execve(cmd[0], cmd, charenv);
 	ft_notfnd(cmd[0]);
 	exit(EXIT_FAILURE);
 }
 
-static int		ft_father(int *pfd, char ***cmd, char ***charenv,
-							t_list **fdlist)
+static int		ft_father(int *pfd, int pid, char ***charenv, int *pfd2)
 {
 	int			waitvar;
 
@@ -60,9 +58,8 @@ static int		ft_father(int *pfd, char ***cmd, char ***charenv,
 	signal(SIGINT, ft_sighand2);
 	signal(SIGUSR1, ft_sighandler);
 	ft_pfd_close(pfd);
-	wait(&waitvar);
-	ft_close_fdlist(fdlist);
-	ft_clear_tab(*cmd);
+	if (!pfd2)
+		waitpid(pid, &waitvar, 0);
 	ft_clear_tab(*charenv);
 	if (WIFSIGNALED(waitvar))
 		return (0);
@@ -93,6 +90,6 @@ int				ft_cmd_handler(t_node *tree, t_list **env, int *pfd, int *pfd2)
 		ft_son(cmd, charenv, tree, &fdlist);
 	}
 	else
-		return (ft_father(pfd, &cmd, &charenv, &fdlist));
+		return (ft_father(pfd, pid, &charenv, pfd2));
 	return (0);
 }

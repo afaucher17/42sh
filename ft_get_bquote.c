@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/28 10:14:03 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/07 18:28:43 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/08 21:30:18 by afaucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,26 +21,21 @@ static void		ft_bq_son(int *pfd, t_token **bquote, t_list **env)
 	exit(EXIT_SUCCESS);
 }
 
-static char		*ft_bq_father(int *pfd, t_token **bquote, int pid)
+static char		*ft_bq_father(int *pfd, t_token **bquote)
 {
 	int			len;
 	char		*tmp;
 	char		*results;
 	char		buf[BUFF_SIZE];
-	int			i;
 
 	close(pfd[1]);
 	dup2(pfd[0], 0);
-	wait(&pid);
 	results = NULL;
 	while ((len = read(0, buf, BUFF_SIZE - 1)) > 0)
 	{
-		i = 0;
 		buf[len] = '\0';
 		tmp = results;
-		if (ft_strnequ(buf, "\033[4l", 4))
-			i = 4;
-		results = ft_strjoin(tmp, buf + i);
+		results = ft_strjoin(tmp, buf);
 		free(tmp);
 		ft_bzero(buf, BUFF_SIZE);
 	}
@@ -65,7 +60,7 @@ static t_token	*ft_if_bq(t_token **bquote, t_list **env, t_token **save,
 	if (pid == 0)
 		ft_bq_son(pfd, bquote, env);
 	else
-		results = ft_bq_father(pfd, bquote, pid);
+		results = ft_bq_father(pfd, bquote);
 	list = ft_token_split(results, "\n \t");
 	tmp = list;
 	free(results);
