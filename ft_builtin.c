@@ -6,13 +6,13 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/12/28 17:22:09 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/08 21:33:26 by afaucher         ###   ########.fr       */
+/*   Updated: 2014/03/11 15:58:19 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include			"42sh.h"
 
-static int				ft_env(char **cmd, t_list **env, t_list **fdlist)
+static int				ft_env(char **cmd, t_list **env, t_fdlist **fdlist)
 {
 	t_list				*tmp;
 
@@ -27,7 +27,7 @@ static int				ft_env(char **cmd, t_list **env, t_list **fdlist)
 	return (1);
 }
 
-static int				ft_setenv(char **cmd, t_list **env, t_list **fdlist)
+static int				ft_setenv(char **cmd, t_list **env, t_fdlist **fdlist)
 {
 	int					i;
 	t_list				*tmp;
@@ -50,7 +50,7 @@ static int				ft_setenv(char **cmd, t_list **env, t_list **fdlist)
 	return (1);
 }
 
-static int				ft_unsetenv(char **cmd, t_list **env, t_list **fdlist)
+static int				ft_unsetenv(char **cmd, t_list **env, t_fdlist **fdlist)
 {
 	t_list				*tmp;
 	t_list				*cur;
@@ -72,7 +72,7 @@ static int				ft_unsetenv(char **cmd, t_list **env, t_list **fdlist)
 	return (1);
 }
 
-static int				ft_exit(char **cmd, t_list **env, t_list **fdlist)
+static int				ft_exit(char **cmd, t_list **env, t_fdlist **fdlist)
 {
 	ft_close_fdlist(fdlist);
 	ft_clear_tab(cmd);
@@ -81,7 +81,7 @@ static int				ft_exit(char **cmd, t_list **env, t_list **fdlist)
 	return (1);
 }
 
-int						ft_builtin(t_list **env, t_list **fdlist, t_node *tree)
+int						ft_builtin(t_list **env, t_fdlist **fdlist, t_node *tree)
 {
 	int					i;
 	int					ret;
@@ -91,7 +91,7 @@ int						ft_builtin(t_list **env, t_list **fdlist, t_node *tree)
 		{"unsetenv", ft_unsetenv}, {"cd", ft_cd}, {"echo", ft_echo}};
 
 	cmd = ft_arg_handler(tree, ft_strdup(tree->data));
-	if (env && ft_red_handler(tree->left, fdlist))
+	if (env && ft_red_handler(tree->left, *fdlist, 1))
 	{
 		i = 0;
 		while (i < 6)
@@ -99,7 +99,6 @@ int						ft_builtin(t_list **env, t_list **fdlist, t_node *tree)
 			if (ft_strequ(cmd[0], builtin[i].cmd))
 			{
 				ret = builtin[i].f(cmd, env, fdlist);
-				ft_close_fdlist(fdlist);
 				ft_clear_tab(cmd);
 				dup2(ft_reset_std()[0], 0);
 				dup2(ft_reset_std()[1], 1);

@@ -6,32 +6,35 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/25 13:20:14 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/08 21:32:20 by afaucher         ###   ########.fr       */
+/*   Updated: 2014/03/11 16:02:43 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include		"42sh.h"
 
-static int		ft_drred_handler(t_node *tree, t_list **list)
+static int		ft_drred_handler(t_node *tree, t_fdlist *fdlist)
 {
 	int			fd;
 
-	if ((fd = open(tree->data, O_WRONLY | O_APPEND |
-			O_CREAT, S_IRUSR | S_IWUSR | S_IRGRP)) == -1)
+	if (!fdlist || !fdlist->cur)
+		return (0);
+	fd = *((int*)fdlist->cur->content);
+	if (fd == -1)
 		return (ft_error(tree->data, "Permission denied"));
-	ft_lstadd(list, ft_lstnew(&fd, sizeof(int)));
+	fdlist->cur = fdlist->cur->next;
 	dup2(fd, 1);
 	return (1);
 }
 
-static int		ft_rred_handler(t_node *tree, t_list **list)
+static int		ft_rred_handler(t_node *tree, t_fdlist *fdlist)
 {
 	int			fd;
 
-	if ((fd = open(tree->data, O_WRONLY | O_TRUNC |
-			O_CREAT, S_IRUSR | S_IWUSR | S_IRGRP)) == -1)
+	if (!fdlist || !fdlist->cur)
+		return (0);
+	fd = *((int*)fdlist->cur->content);
+	if (fd == -1)
 		return (ft_error(tree->data, "Permission denied"));
-	ft_lstadd(list, ft_lstnew(&fd, sizeof(int)));
 	dup2(fd, 1);
 	return (1);
 }
@@ -65,30 +68,35 @@ static int		ft_dlred_handler(t_node *tree)
 	return (1);
 }
 
-static int		ft_lred_handler(t_node *tree, t_list **list)
+static int		ft_lred_handler(t_node *tree, t_fdlist *fdlist)
 {
 	int			fd;
 
+	if (!fdlist || !fdlist->cur)
+		return (0);
+	fd = *((int*)fdlist->cur->content);
 	if ((fd = open(tree->data, O_RDONLY)) == -1)
 		return (ft_error(tree->data, "No such file or directory"));
-	ft_lstadd(list, ft_lstnew(&fd, sizeof(int)));
 	dup2(fd, 0);
 	return (1);
 }
 
-int				ft_red_handler(t_node *tree, t_list **list)
+int				ft_red_handler(t_node *tree, t_fdlist *fdlist, int check)
 {
 	int			ret;
 
+	ret = 0;
 	if (!tree)
-		return (1);
-	if (tree->type == LEFT_RED)
-		ret = ft_lred_handler(tree, list);
-	if (tree->type == DLEFT_RED)
+		return (check);
+	if (tree->type == LEFT_RED && check)
+		ret = ft_lred_handler(tree, fdlist);
+	if (tree->type == DLEFT_RED && check)
 		ret = ft_dlred_handler(tree);
-	if (tree->type == RIGHT_RED)
-		ret = ft_rred_handler(tree, list);
-	if (tree->type == DRIGHT_RED)
-		ret = ft_drred_handler(tree, list);
-	return (ret && ft_red_handler(tree->left, list));
+	if (tree->type == RIGHT_RED && check)
+		ret = ft_rred_handler(tree, fdlist);
+	if (tree->type == DRIGHT_RED && check)
+		ret = ft_drred_handler(tree, fdlist);
+	if (fdlist && fdlist->cur)
+		fdlist->cur = fdlist->cur->next;
+	return (ft_red_handler(tree->left, fdlist, ret));
 }

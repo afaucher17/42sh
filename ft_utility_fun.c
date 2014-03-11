@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/05 17:07:08 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/02 15:03:55 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/11 16:11:08 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,15 +71,22 @@ char			*ft_insertchar(char c, char *cmd, int idx)
 	return (new);
 }
 
-void			ft_close_fdlist(t_list **list)
+void			ft_close_fdlist(t_fdlist **fdlist)
 {
 	t_list		*save;
+	int			fd;
 
-	save = *list;
+	save = NULL;
+	if ((*fdlist) && (*fdlist)->head)
+		save = (*fdlist)->head;
 	while (save)
 	{
-		close(*((int*)save->content));
+		fd = *((int*)save->content);
+		if (fd != -1)
+			close(fd);
 		save = save->next;
 	}
-	ft_list_clear(list);
+	if ((*fdlist) && (*fdlist)->head)
+		ft_list_clear(&(*fdlist)->head);
+	free(*fdlist);
 }

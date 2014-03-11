@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/07 16:51:33 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/07 17:16:49 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/11 15:27:48 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static int			ft_cdexceptions(char **cmd, t_list **env)
 	return (0);
 }
 
-int					ft_cd(char **cmd, t_list **env, t_list **fdlist)
+int					ft_cd(char **cmd, t_list **env, t_fdlist **fdlist)
 {
 	char			buf[4096];
 	t_list			*tmp;

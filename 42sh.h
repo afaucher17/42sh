@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/05 12:42:10 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/07 18:11:50 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/11 16:07:26 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,12 @@ typedef struct		s_token
 	char			type;
 }					t_token;
 
+typedef struct		s_fdlist
+{
+	t_list			*head;
+	t_list			*cur;
+}					t_fdlist;
+
 typedef struct		s_node
 {
 	struct s_node	*left;
@@ -92,7 +98,7 @@ typedef	struct		s_keys
 typedef struct		s_builtin
 {
 	char			*cmd;
-	int				(*f)(char **, t_list **, t_list **);
+	int				(*f)(char **, t_list **, t_fdlist **);
 }					t_builtin;
 
 enum				e_state
@@ -175,7 +181,7 @@ void			ft_sighand2(int signal);
 /*
 ** ft_builtin.c
 */
-int				ft_builtin(t_list **env, t_list **fdlist, t_node *tree);
+int				ft_builtin(t_list **env, t_fdlist **fdlist, t_node *tree);
 
 /*
 ** ft_is_builtin.c
@@ -185,12 +191,12 @@ int				ft_is_builtin(char *cmd);
 /*
 ** ft_cd.c
 */
-int				ft_cd(char **cmd, t_list **env, t_list **fdlist);
+int				ft_cd(char **cmd, t_list **env, t_fdlist **fdlist);
 
 /*
 ** ft_echo.c
 */
-int				ft_echo(char **cmd, t_list **env, t_list **fdlist);
+int				ft_echo(char **cmd, t_list **env, t_fdlist **fdlist);
 
 /*
 ** ft_echo_utf.c
@@ -212,18 +218,18 @@ void			ft_pfd_close(int *pfd);
 ** ft_cmd_handler.c
 */
 char			**ft_arg_handler(t_node *tree, char *cmd);
-int				ft_cmd_handler(t_node *tree, t_list **env, int *pfd,
-									int *pfd2);
+int				ft_cmd_handler(t_node *tree, t_list **env, int **tpfd,
+								t_fdlist *fdlist);
 
 /*
 ** ft_red_handler.c
 */
-int				ft_red_handler(t_node *tree, t_list **list);
+int				ft_red_handler(t_node *tree, t_fdlist *fdlist, int check);
 
 /*
 ** ft_red_open.c
 */
-int				ft_red_open(t_node *tree);
+void			ft_red_open(t_fdlist **fdlist, t_node *tree);
 
 /*
 ** ft_token_handler.c
@@ -242,7 +248,7 @@ t_winsize		*ft_get_winsz(void);
 int				*ft_reset_std(void);
 t_copy			*ft_get_copy(void);
 char			*ft_insertchar(char c, char *cmd, int idx);
-void			ft_close_fdlist(t_list **list);
+void			ft_close_fdlist(t_fdlist **fdlist);
 
 /*
 ** ft_term_fun.c
