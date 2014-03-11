@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/15 14:46:12 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/11 16:02:33 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/11 16:25:58 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void		ft_son(t_fdlist *fdlist, char **charenv, t_node *tree, int builtin)
 	signal(SIGINT, SIG_DFL);
 	if (!builtin)
 		cmd = ft_arg_handler(tree, ft_checkpath(tree->data, charenv));
-	if (!cmd)
+	if (!cmd && !builtin)
 		exit(EXIT_SUCCESS);
 	if (!builtin)
 	{
