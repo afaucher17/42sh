@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/05 17:07:08 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/11 16:11:08 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/11 19:02:28 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,4 +89,5 @@ void			ft_close_fdlist(t_fdlist **fdlist)
 	if ((*fdlist) && (*fdlist)->head)
 		ft_list_clear(&(*fdlist)->head);
 	free(*fdlist);
+	*fdlist = NULL;
 }

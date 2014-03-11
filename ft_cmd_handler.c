@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/15 14:46:12 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/11 16:25:58 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/11 19:33:52 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,12 @@ static void		ft_son(t_fdlist *fdlist, char **charenv, t_node *tree, int builtin)
 		cmd = ft_arg_handler(tree, ft_checkpath(tree->data, charenv));
 	if (!cmd && !builtin)
 		exit(EXIT_SUCCESS);
-	if (!builtin)
+	if (!builtin && ft_red_handler(tree->left, fdlist, 1))
 	{
 		execve(cmd[0], cmd, charenv);
 		ft_notfnd(cmd[0]);
 	}
-	else
+	else if (builtin)
 	{
 		ft_clear_tab(charenv);
 		ret = ft_builtin(&env, &fdlist, tree);
@@ -99,8 +99,6 @@ int				ft_cmd_handler(t_node *tree, t_list **env, int **tpfd, t_fdlist *fdlist)
 	if (pid == 0)
 	{
 		ft_pfd_manage(tpfd[0], tpfd[1]);
-		if (!ft_red_handler(tree->left, fdlist, 1))
-			exit(EXIT_FAILURE);
 		ft_son(fdlist, charenv, tree, builtin);
 	}
 	else

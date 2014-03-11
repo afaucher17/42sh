@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/25 16:45:07 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/11 16:05:56 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/11 19:42:07 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,4 @@ void			ft_red_open(t_fdlist **fdlist, t_node *tree)
 	if (tree->type == DRIGHT_RED || tree->type == RIGHT_RED || tree->type == LEFT_RED)
 		ft_fdlistpushback(fdlist, fd);
 	ft_red_open(fdlist, tree->left);
-	ft_red_open(fdlist, tree->right);
 }
