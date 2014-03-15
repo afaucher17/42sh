@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/28 10:14:03 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/08 21:30:18 by afaucher         ###   ########.fr       */
+/*   Updated: 2014/03/13 15:59:54 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ static char		*ft_bq_father(int *pfd, t_token **bquote)
 		free(tmp);
 		ft_bzero(buf, BUFF_SIZE);
 	}
+	while ((wait(NULL)) >= 0)
+		;
 	dup2((ft_reset_std())[0], 0);
 	close(pfd[0]);
 	ft_token_clear(bquote);

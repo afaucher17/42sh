@@ -6,7 +6,7 @@
 #    By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2013/12/27 14:53:18 by tdieumeg          #+#    #+#              #
-#    Updated: 2014/03/07 17:10:37 by tdieumeg         ###   ########.fr        #
+#    Updated: 2014/03/15 16:27:16 by tdieumeg         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,9 +47,26 @@ OBJ		= main.o \
 		  ft_putchar_tc.o \
 		  ft_log.o \
 		  ft_error.o \
-		  ft_utility_fun.o 
+		  ft_utility_fun.o \
+		  ft_autocomp.o \
+		  ft_autocomp_fun.o \
+		  ft_select.o \
+		  ft_slct_dep.o \
+		  draw_list.o \
+		  key_down.o \
+		  key_up.o \
+		  key_escape.o \
+		  key_return.o \
+		  key_right.o \
+		  key_left.o \
+		  keys.o \
+		  list.o \
+		  move.o \
+		  signals.o \
+		  write.o \
+		  get_next_line.o
 
-CFLAGS	= -Wall -Wextra -Werror
+CFLAGS	= -Wall -Wextra -Werror -g
 
 HEADERS	= -I. -Ilibft/
 

@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/24 14:18:26 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/05 16:53:13 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/15 19:05:19 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ static char			parse_logic(t_token **list, t_node **tree)
 		else
 		{
 			*tree = node->left;
-			free(node);
 			free(node->data);
+			free(node);
 		}
 		return (1);
 	}

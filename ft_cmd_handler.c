@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/15 14:46:12 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/11 19:33:52 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/14 16:43:45 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,13 @@ static int		ft_father(int pid, char **charenv, int **tpfd)
 	int			waitvar;
 
 	waitvar = 0;
+	(void)pid;
 	signal(SIGINT, ft_sighand2);
 	signal(SIGUSR1, ft_sighandler);
 	ft_pfd_close(tpfd[0]);
 	if (!tpfd[1])
-		waitpid(pid, &waitvar, 0);
+		while (waitpid(-1, &waitvar, 0) >= 0)
+			;
 	ft_clear_tab(charenv);
 	if (WIFSIGNALED(waitvar))
 		return (0);

@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/07 16:51:33 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/11 15:27:48 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/15 16:16:41 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,8 @@ static int			ft_cdexceptions(char **cmd, t_list **env)
 
 int					ft_cd(char **cmd, t_list **env, t_fdlist **fdlist)
 {
-	char			buf[4096];
+	//char			buf[4096];
+	char			*ret;
 	t_list			*tmp;
 	char			*pwd;
 
@@ -84,7 +85,9 @@ int					ft_cd(char **cmd, t_list **env, t_fdlist **fdlist)
 		{
 			pwd = ft_strsub(tmp->content, 4, ft_strlen(tmp->content) - 4);
 			free(tmp->content);
-			tmp->content = ft_strjoin("PWD=", getcwd(buf, 4096));
+			ret = getcwd(NULL, 0);
+			tmp->content = ft_strjoin("PWD=", ret);
+			ft_strdel(&ret);
 		}
 		if ((tmp = ft_get_env("OLDPWD", *env)) != NULL && pwd)
 		{

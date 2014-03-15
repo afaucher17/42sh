@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/05 12:42:10 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/11 16:07:26 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/15 14:08:31 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,10 @@
 # include			<signal.h>
 # include			<sys/types.h>
 # include			<sys/ioctl.h>
+# include			<sys/stat.h>
 # include			<stdlib.h>
 # include			<fcntl.h>
+# include			<dirent.h>
 # include			"libft/libft.h"
 # define BUFF_SIZE	8192
 # define COM		0
@@ -52,6 +54,7 @@
 # define DELETE		2117294875
 # define BACKSPACE	127
 # define RETURN		10
+# define TAB		9
 # define CTRL_D		4
 # define ALT_C		42947
 # define PROMPT		"42sh> "
@@ -277,6 +280,7 @@ void			ft_u_arrow(t_dlist **list, int visual);
 void			ft_d_arrow(t_dlist **list, int visual);
 void			ft_l_arrow(t_dlist **list, int visual);
 void			ft_r_arrow(t_dlist **list, int visual);
+void			ft_tab(t_dlist **list, int visual);
 
 /*
 ** ft_keys_fun3.c
@@ -297,6 +301,31 @@ int				ft_putchar_tc(int c);
 */
 t_dlist			*ft_log_to_dlist(void);
 void			ft_append_cmd_to_log(char *cmd);
+
+/*
+** ft_autocomp.c
+*/
+char			*ft_autocomp(char *fullpath, int exec);
+
+/*
+** ft_autocomp_fun.c
+*/
+char			*ft_complete(t_list *file_l, char *filename);
+
+/*
+** ft_select.c
+*/
+char			*ft_select(t_list *file_l, char *filename);
+
+/*
+** ft_slct_dep.c
+*/
+char			*ft_slct_dep(t_list *file_l, int *pfd);
+
+/*
+** get_next_line.c
+*/
+int				get_next_line(int fd, char **line);
 
 /*
 ** ft_error.c

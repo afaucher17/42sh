@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/04 18:19:27 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/08 21:32:34 by afaucher         ###   ########.fr       */
+/*   Updated: 2014/03/14 18:56:54 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,17 @@ int					g_idx = 0;
 static int			ft_get_fun(int buff, t_dlist **list)
 {
 	int				j;
-	static t_keys	key_tab[13] =
+	static t_keys	key_tab[14] =
 	{
 		{DELETE, ft_delete}, {BACKSPACE, ft_backspace}, {HOME, ft_home},
 		{END, ft_end}, {ALT_U_A, ft_alt_u_arrow}, {ALT_D_A, ft_alt_d_arrow},
 		{ALT_L_A, ft_alt_l_arrow}, {ALT_R_A, ft_alt_r_arrow},
 		{U_ARROW, ft_u_arrow}, {D_ARROW, ft_d_arrow}, {L_ARROW, ft_l_arrow},
-		{R_ARROW, ft_r_arrow}, {CTRL_D, ft_ctrl_d}
+		{R_ARROW, ft_r_arrow}, {CTRL_D, ft_ctrl_d}, {TAB, ft_tab}
 	};
 
 	j = 0;
-	while (j < 13)
+	while (j < 14)
 	{
 		if (key_tab[j].key == buff)
 		{
@@ -71,7 +71,9 @@ static void			ft_aff_key(char c)
 	{
 		ft_putstr(g_cmd + g_idx);
 		g_idx += ft_strlen(g_cmd + g_idx);
-		if (((ft_strlen(g_cmd) + ft_strlen(PROMPT)) % ft_get_winsz()->ws_col) == 0)
+		if (ft_get_winsz()->ws_col > 0
+				&& ((ft_strlen(g_cmd) + ft_strlen(PROMPT))
+				% ft_get_winsz()->ws_col) == 0)
 			tputs(tgetstr("do", NULL), 1, ft_putchar_tc);
 		while (g_idx > j + 1)
 			ft_l_arrow(NULL, 0);
@@ -80,7 +82,7 @@ static void			ft_aff_key(char c)
 
 static void			ft_insert(int j, char c)
 {
-	if (c >= 32 && c <= 126 && j == 13)
+	if (c >= 32 && c <= 126 && j == 14)
 	{
 		ft_memmove(g_cmd + g_idx + 1, g_cmd + g_idx, ft_strlen(g_cmd + g_idx));
 		g_cmd[g_idx] = c;

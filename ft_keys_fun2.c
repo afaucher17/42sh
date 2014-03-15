@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/06 12:16:52 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/04 16:47:46 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/15 14:58:58 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,21 +58,6 @@ void				ft_d_arrow(t_dlist **list, int visual)
 	}
 }
 
-/*void				ft_l_arr_bis(int i, t_dlist **list, char *g_cmd)
-{
-	if (g_cmd[i])
-	{
-		tputs(tgetstr("dc", NULL), 1, ft_putchar_tc);
-		ft_putchar(g_cmd[i]);
-		if (((g_idx + ft_strlen(PROMPT)) % ft_get_winsz()->ws_col)
-				== ft_get_winsz()->ws_col - 1)
-			tputs(tgetstr("do", NULL), 1, ft_putchar_tc);
-		ft_get_copy()->visual_mode = 0;
-		ft_l_arrow(g_idx + 1, list, g_cmd, 0);
-		ft_get_copy()->visual_mode = 1;
-	}
-}*/
-
 void				ft_l_arrow(t_dlist **list, int visual)
 {
 	int				j;
@@ -81,7 +66,8 @@ void				ft_l_arrow(t_dlist **list, int visual)
 	(void)visual;
 	if (g_idx > 0)
 	{
-		if (((g_idx + ft_strlen(PROMPT)) % ft_get_winsz()->ws_col) == 0)
+		if (ft_get_winsz()->ws_col > 0
+				&& ((g_idx + ft_strlen(PROMPT)) % ft_get_winsz()->ws_col) == 0)
 		{
 			tputs(tgetstr("up", NULL), 1, ft_putchar_tc);
 			j = 0;
@@ -105,7 +91,41 @@ void				ft_r_arrow(t_dlist **list, int visual)
 	{
 		g_idx++;
 		tputs(tgetstr("nd", NULL), 1, ft_putchar_tc);
-		if (((g_idx + ft_strlen(PROMPT)) % ft_get_winsz()->ws_col) == 0)
+		if (ft_get_winsz()->ws_col > 0
+				&& ((g_idx + ft_strlen(PROMPT)) % ft_get_winsz()->ws_col) == 0)
 			tputs(tgetstr("do", NULL), 1, ft_putchar_tc);
+	}
+}
+
+void				ft_tab(t_dlist **list, int visual)
+{
+	int				i;
+	int				j;
+	char			*sub;
+	char			*str;
+
+	while (g_cmd[g_idx] && g_cmd[g_idx] != ' ')
+		ft_r_arrow(list, visual);
+	i = g_idx;
+	while (i > 0 && g_cmd[i - 1] != ' ')
+		i--;
+	sub = ft_strsub(g_cmd, i, g_idx - i);
+	str = ft_autocomp(sub, 0);
+	free(sub);
+	j = g_idx;
+	if (str)
+	{
+		ft_memmove(g_cmd + g_idx + ft_strlen(str),
+					g_cmd + g_idx, ft_strlen(g_cmd + g_idx));
+		ft_memmove(g_cmd + g_idx, str, ft_strlen(str));
+		ft_putstr(g_cmd + g_idx);
+		g_idx += ft_strlen(g_cmd + g_idx);
+		if (ft_get_winsz()->ws_col > 0 
+			&& ((ft_strlen(g_cmd) + ft_strlen(PROMPT))
+			% ft_get_winsz()->ws_col) == 0)
+			tputs(tgetstr("do", NULL), 1, ft_putchar_tc);
+		while (g_idx > (int)(j + ft_strlen(str)))
+			ft_l_arrow(NULL, 0);
+		free(str);
 	}
 }
