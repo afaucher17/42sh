@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/07 16:51:33 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/15 16:16:41 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/17 20:40:01 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,12 @@ static int			ft_chdir(char *str)
 	return (0);
 }
 
-static void			ft_cdassist(t_list **env, char *path)
+static void			ft_cdassist(t_mlist *mlist, char *path)
 {
 	t_list			*tmp;
 	char			*sub;
 
-	tmp = *env;
+	tmp = mlist->env;
 	sub = NULL;
 	while (tmp && !ft_strnequ(tmp->content, path, ft_strlen(path)))
 		tmp = tmp->next;
@@ -46,42 +46,40 @@ static void			ft_cdassist(t_list **env, char *path)
 	free(sub);
 }
 
-static void			ft_createoldpwd(char *pwd, t_list **env)
+static void			ft_createoldpwd(char *pwd, t_mlist *mlist)
 {
 	char			*join;
 
 	join = ft_strjoin("OLDPWD=", pwd);
-	ft_lstpushback(env, join, ft_strlen(join));
+	ft_lstpushback(&(mlist->env), join, ft_strlen(join));
 	free(join);
 }
 
-static int			ft_cdexceptions(char **cmd, t_list **env)
+static int			ft_cdexceptions(char **cmd, t_mlist *mlist)
 {
 	if (cmd && cmd[1] == 0)
 	{
-		ft_cdassist(env, "HOME");
+		ft_cdassist(mlist, "HOME");
 		return (1);
 	}
 	if (cmd && cmd[1][0] == '-' && cmd[1][1] == '\0')
 	{
-		ft_cdassist(env, "OLDPWD");
+		ft_cdassist(mlist, "OLDPWD");
 		return (1);
 	}
 	return (0);
 }
 
-int					ft_cd(char **cmd, t_list **env, t_fdlist **fdlist)
+int					ft_cd(char **cmd, t_mlist *mlist)
 {
-	//char			buf[4096];
 	char			*ret;
 	t_list			*tmp;
 	char			*pwd;
 
-	(void)fdlist;
 	pwd = NULL;
-	if (cmd && (ft_cdexceptions(cmd, env) || ft_chdir(cmd[1])))
+	if (cmd && (ft_cdexceptions(cmd, mlist) || ft_chdir(cmd[1])))
 	{
-		if ((tmp = ft_get_env("PWD", *env)) != NULL)
+		if ((tmp = ft_get_env("PWD", mlist->env)) != NULL)
 		{
 			pwd = ft_strsub(tmp->content, 4, ft_strlen(tmp->content) - 4);
 			free(tmp->content);
@@ -89,13 +87,13 @@ int					ft_cd(char **cmd, t_list **env, t_fdlist **fdlist)
 			tmp->content = ft_strjoin("PWD=", ret);
 			ft_strdel(&ret);
 		}
-		if ((tmp = ft_get_env("OLDPWD", *env)) != NULL && pwd)
+		if ((tmp = ft_get_env("OLDPWD", mlist->env)) != NULL && pwd)
 		{
 			free(tmp->content);
 			tmp->content = ft_strjoin("OLDPWD=", pwd);
 		}
 		else if (pwd)
-			ft_createoldpwd(pwd, env);
+			ft_createoldpwd(pwd, mlist);
 		free(pwd);
 		return (1);
 	}

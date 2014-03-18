@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/12 15:00:51 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/15 14:35:22 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/17 11:56:08 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,9 @@ char				*ft_complete(t_list *file_l, char *filename)
 			free(filename);
 			return (ret);
 		}
+		if (file_l && !(file_l->next))
+			return (NULL);
 		return (ft_select(file_l, filename));
 	}
-	return (ft_strdup(""));
+	return (NULL);
 }

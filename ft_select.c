@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/13 15:06:34 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/15 15:25:18 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/17 12:38:56 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ static char			*ft_father(int *pfd)
 	ret = NULL;
 	close(pfd[1]);
 	dup2(pfd[0], 0);
-	wait(NULL);
 	while (get_next_line(0, &line) > 0)
 	{
 		tmp = ret;
@@ -31,6 +30,7 @@ static char			*ft_father(int *pfd)
 		free(tmp);
 		free(line);
 	}
+	wait(NULL);
 	close(pfd[0]);
 	dup2((ft_reset_std())[0], 0);
 	return (ret);
@@ -56,7 +56,8 @@ char				*ft_select(t_list *file_l, char *filename)
 	else
 		tmp = ft_father(pfd);
 	ft_list_clear(&file_l);
-	ret = ft_strdup(tmp + ft_strlen(filename));
+	if (tmp)
+		ret = ft_strdup(tmp + ft_strlen(filename));
 	free(tmp);
 	free(filename);
 	return (ret);

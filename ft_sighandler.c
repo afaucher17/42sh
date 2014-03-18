@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/12/28 16:29:19 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/04 15:25:18 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/17 20:45:17 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void				ft_sighandler(int signal)
 {
 	if (signal == SIGINT)
 	{
-		ft_end(NULL, 0);
+		ft_end(NULL, 0, NULL);
 		tputs(tgetstr("do", NULL), 1, ft_putchar_tc);
 		ft_bzero(g_cmd, BUFF_SIZE);
 		g_idx = 0;

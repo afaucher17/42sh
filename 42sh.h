@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/05 12:42:10 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/15 14:08:31 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/17 20:56:35 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,12 @@ typedef struct		s_node
 	char			type;
 }					t_node;
 
+typedef struct		s_mlist
+{
+	t_fdlist		*fdlist;
+	t_list			*env;
+}					t_mlist;
+
 typedef struct		winsize t_winsize;
 
 typedef struct		s_copy
@@ -95,13 +101,13 @@ typedef struct		s_copy
 typedef	struct		s_keys
 {
 	int				key;
-	void			(*f)(t_dlist **, int visual);
+	void			(*f)(t_dlist **, int visual, t_mlist *mlist);
 }					t_keys;
 
 typedef struct		s_builtin
 {
 	char			*cmd;
-	int				(*f)(char **, t_list **, t_fdlist **);
+	int				(*f)(char **, t_mlist *);
 }					t_builtin;
 
 enum				e_state
@@ -117,12 +123,12 @@ enum				e_state
 /*
 ** main.c
 */
-int				ft_compute(t_token **list, t_list **env);
+int				ft_compute(t_token **list, t_mlist *mlist);
 
 /*
 ** ft_analyser.c
 */
-char			*ft_analyser(char *cmd);
+char			*ft_analyser(char *cmd, t_mlist *mlist);
 
 /*
 ** ft_lexer.c
@@ -166,7 +172,7 @@ void			ft_nodeaddlast(t_node **tree, char left, t_node *node);
 /*
 ** ft_checkpath.c
 */
-char			*ft_checkpath(char *split, char **environ);
+char			*ft_checkpath(char *cmd, char **environ);
 
 /*
 ** ft_envman.c
@@ -184,7 +190,7 @@ void			ft_sighand2(int signal);
 /*
 ** ft_builtin.c
 */
-int				ft_builtin(t_list **env, t_fdlist **fdlist, t_node *tree);
+int				ft_builtin(t_mlist *mlist, t_node *tree);
 
 /*
 ** ft_is_builtin.c
@@ -194,12 +200,12 @@ int				ft_is_builtin(char *cmd);
 /*
 ** ft_cd.c
 */
-int				ft_cd(char **cmd, t_list **env, t_fdlist **fdlist);
+int				ft_cd(char **cmd, t_mlist *mlist);
 
 /*
 ** ft_echo.c
 */
-int				ft_echo(char **cmd, t_list **env, t_fdlist **fdlist);
+int				ft_echo(char **cmd, t_mlist *mlist);
 
 /*
 ** ft_echo_utf.c
@@ -221,13 +227,12 @@ void			ft_pfd_close(int *pfd);
 ** ft_cmd_handler.c
 */
 char			**ft_arg_handler(t_node *tree, char *cmd);
-int				ft_cmd_handler(t_node *tree, t_list **env, int **tpfd,
-								t_fdlist *fdlist);
+int				ft_cmd_handler(t_node *tree, t_mlist *mlist, int **tpfd);
 
 /*
 ** ft_red_handler.c
 */
-int				ft_red_handler(t_node *tree, t_fdlist *fdlist, int check);
+int				ft_red_handler(t_node *tree, t_mlist *mlist, int check);
 
 /*
 ** ft_red_open.c
@@ -237,12 +242,12 @@ void			ft_red_open(t_fdlist **fdlist, t_node *tree);
 /*
 ** ft_token_handler.c
 */
-int				ft_expr_handler(t_node *tree, t_list **env);
+int				ft_expr_handler(t_node *tree, t_mlist *mlist);
 
 /*
 ** ft_get_bquote.c
 */
-void			ft_get_bquote(t_token **list, t_list **env);
+void			ft_get_bquote(t_token **list, t_mlist *mlist);
 
 /*
 ** ft_utility_fun.c
@@ -262,34 +267,34 @@ int				ft_reset_term(void);
 /*
 ** ft_read_keys.c
 */
-char			*ft_read_keys(t_dlist *list);
+char			*ft_read_keys(t_dlist *list, int noctrld, t_mlist *mlist);
 
 /*
 ** ft_keys_fun.c
 */
-void			ft_backspace(t_dlist **list, int visual);
-void			ft_delete(t_dlist **list, int visual);
-void			ft_home(t_dlist **list, int visual);
-void			ft_end(t_dlist **list, int visual);
-void			ft_ctrl_d(t_dlist **list, int visual);
+void			ft_backspace(t_dlist **list, int visual, t_mlist *mlist);
+void			ft_delete(t_dlist **list, int visual, t_mlist *mlist);
+void			ft_home(t_dlist **list, int visual, t_mlist *mlist);
+void			ft_end(t_dlist **list, int visual, t_mlist *mlist);
+void			ft_ctrl_d(t_dlist **list, int visual, t_mlist *mlist);
 
 /*
 ** ft_keys_fun2.c
 */
-void			ft_u_arrow(t_dlist **list, int visual);
-void			ft_d_arrow(t_dlist **list, int visual);
-void			ft_l_arrow(t_dlist **list, int visual);
-void			ft_r_arrow(t_dlist **list, int visual);
-void			ft_tab(t_dlist **list, int visual);
+void			ft_u_arrow(t_dlist **list, int visual, t_mlist *mlist);
+void			ft_d_arrow(t_dlist **list, int visual, t_mlist *mlist);
+void			ft_l_arrow(t_dlist **list, int visual, t_mlist *mlist);
+void			ft_r_arrow(t_dlist **list, int visual, t_mlist *mlist);
+void			ft_tab(t_dlist **list, int visual, t_mlist *mlist);
 
 /*
 ** ft_keys_fun3.c
 */
-void			ft_alt_u_arrow(t_dlist **list, int visual);
-void			ft_alt_d_arrow(t_dlist **list, int visual);
-void			ft_alt_l_arrow(t_dlist **list, int visual);
-void			ft_alt_r_arrow(t_dlist **list, int visual);
-void			ft_return(t_dlist **list, int visual);
+void			ft_alt_u_arrow(t_dlist **list, int visual, t_mlist *mlist);
+void			ft_alt_d_arrow(t_dlist **list, int visual, t_mlist *mlist);
+void			ft_alt_l_arrow(t_dlist **list, int visual, t_mlist *mlist);
+void			ft_alt_r_arrow(t_dlist **list, int visual, t_mlist *mlist);
+void			ft_return(t_dlist **list, int visual, t_mlist *mlist);
 
 /*
 ** ft_putchar_tc.c
@@ -305,7 +310,7 @@ void			ft_append_cmd_to_log(char *cmd);
 /*
 ** ft_autocomp.c
 */
-char			*ft_autocomp(char *fullpath, int exec);
+char			*ft_autocomp(char *fullpath, int exec, t_mlist *mlist);
 
 /*
 ** ft_autocomp_fun.c

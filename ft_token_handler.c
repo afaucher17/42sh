@@ -6,14 +6,13 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/25 13:06:24 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/11 19:13:18 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/17 20:46:13 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include		"42sh.h"
 
-static int		ft_pipe_handler(t_node *tree, t_list **env, int *pfd,
-								t_fdlist **fdlist)
+static int		ft_pipe_handler(t_node *tree, t_mlist *mlist, int *pfd)
 {
 	int			pfd2[2];
 	int			*tpfd[2];
@@ -25,47 +24,45 @@ static int		ft_pipe_handler(t_node *tree, t_list **env, int *pfd,
 		tpfd[1] = NULL;
 	else
 		tpfd[1] = pfd2;
-	ft_red_open(fdlist, tree);
+	ft_red_open(&(mlist->fdlist), tree);
 	if (tree->type == COM)
 	{
-		ret = ft_cmd_handler(tree, env, tpfd, *fdlist);
-		ft_close_fdlist(fdlist);
+		ret = ft_cmd_handler(tree, mlist, tpfd);
+		ft_close_fdlist(&(mlist->fdlist));
 		return (ret);
 	}
 	if (tree->left)
-		ft_cmd_handler(tree->left, env, tpfd, *fdlist);
-	ft_close_fdlist(fdlist);
+		ft_cmd_handler(tree->left, mlist, tpfd);
+	ft_close_fdlist(&(mlist->fdlist));
 	if (tree->right)
-		return (ft_pipe_handler(tree->right, env, pfd2, fdlist));
+		return (ft_pipe_handler(tree->right, mlist, pfd2));
 	return (0);
 }
 
-static void		ft_logic_handler(t_node *tree, t_list **env, int ret, int op)
+static void		ft_logic_handler(t_node *tree, t_mlist *mlist, int ret, int op)
 {
 	int			ret2;
 	t_node		*node;
-	t_fdlist	*fdlist;
 
-	fdlist = NULL;
 	if (tree->type == COM || tree->type == PIPE_EXP)
 		node = tree;
 	else
 		node = tree->left;
 	if (op == D_OR)
-		ret2 = ret || ft_pipe_handler(node, env, NULL, &fdlist);
+		ret2 = ret || ft_pipe_handler(node, mlist, NULL);
 	if (op == D_AND)
-		ret2 = ret && ft_pipe_handler(node, env, NULL, &fdlist);
+		ret2 = ret && ft_pipe_handler(node, mlist, NULL);
 	if (tree->type != COM && tree->type != PIPE_EXP)
-		ft_logic_handler(tree->right, env, ret2, tree->type);
+		ft_logic_handler(tree->right, mlist, ret2, tree->type);
 }
 
-int				ft_expr_handler(t_node *tree, t_list **env)
+int				ft_expr_handler(t_node *tree, t_mlist *mlist)
 {
 	if (!tree)
 		return (0);
 	if (tree->left)
-		ft_logic_handler(tree->left, env, 0, D_OR);
+		ft_logic_handler(tree->left, mlist, 0, D_OR);
 	if (tree->right)
-		ft_expr_handler(tree->right, env);
+		ft_expr_handler(tree->right, mlist);
 	return (1);
 }

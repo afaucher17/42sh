@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/11/23 16:14:12 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/07 14:34:05 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/17 11:11:21 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void			*ft_memmove(void *s1, const void *s2, size_t n);
 void			*ft_memset(void *b, int c, size_t len);
 int				ft_nmatch(char *s1, char *s2);
 int				ft_putchar(char c);
-void			ft_putchar_fd(char c, int fd);
+int				ft_putchar_fd(char c, int fd);
 int				ft_putendl(char const *s);
 int				ft_putendl_fd(char const *s, int fd);
 void			ft_putnbr(int nb);
@@ -78,7 +78,7 @@ void			ft_putnbr_fd(int nb, int fd);
 int				ft_putnbr_endl(int nb);
 int				ft_putnbr_endl_fd(int nb, int fd);
 int				ft_putstr(char const *s);
-void			ft_putstr_fd(char const *s, int fd);
+int				ft_putstr_fd(char const *s, int fd);
 char			*ft_strcat(char *s1, const char *s2);
 char			*ft_strchr(const char *s, int c);
 void			ft_strclr(char *s);

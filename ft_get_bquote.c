@@ -6,18 +6,18 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/28 10:14:03 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/13 15:59:54 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/17 20:47:53 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include		"42sh.h"
 
-static void		ft_bq_son(int *pfd, t_token **bquote, t_list **env)
+static void		ft_bq_son(int *pfd, t_token **bquote, t_mlist *mlist)
 {
-	ft_get_bquote(bquote, env);
+	ft_get_bquote(bquote, mlist);
 	close(pfd[0]);
 	dup2(pfd[1], 1);
-	ft_compute(bquote, env);
+	ft_compute(bquote, mlist);
 	exit(EXIT_SUCCESS);
 }
 
@@ -47,7 +47,7 @@ static char		*ft_bq_father(int *pfd, t_token **bquote)
 	return (results);
 }
 
-static t_token	*ft_if_bq(t_token **bquote, t_list **env, t_token **save,
+static t_token	*ft_if_bq(t_token **bquote, t_mlist *mlist, t_token **save,
 							t_token *next)
 {
 	int			pid;
@@ -60,7 +60,7 @@ static t_token	*ft_if_bq(t_token **bquote, t_list **env, t_token **save,
 	pid = fork();
 	results = NULL;
 	if (pid == 0)
-		ft_bq_son(pfd, bquote, env);
+		ft_bq_son(pfd, bquote, mlist);
 	else
 		results = ft_bq_father(pfd, bquote);
 	list = ft_token_split(results, "\n \t");
@@ -77,7 +77,7 @@ static t_token	*ft_if_bq(t_token **bquote, t_list **env, t_token **save,
 	return (*save = next);
 }
 
-void			ft_get_bquote(t_token **list, t_list **env)
+void			ft_get_bquote(t_token **list, t_mlist *mlist)
 {
 	t_token     *save;
 	t_token     *bquote;
@@ -96,9 +96,16 @@ void			ft_get_bquote(t_token **list, t_list **env)
 			if (bquote)
 			{
 				if (prev != NULL)
-					prev->next = ft_if_bq(&bquote, env, &save, save->next);
+					prev->next = ft_if_bq(&bquote, mlist, &save, save->next);
 				else
-					*list = ft_if_bq(&bquote, env, &save, save->next);
+					*list = ft_if_bq(&bquote, mlist, &save, save->next);
+			}
+			else
+			{
+				if (prev != NULL)
+					prev->next = NULL;
+				else
+					*list = NULL;
 			}
 		}
 		prev = save;

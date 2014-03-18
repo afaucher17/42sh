@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/25 13:20:14 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/11 19:41:45 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/17 20:35:26 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int		ft_rred_handler(t_node *tree, t_fdlist *fdlist)
 	return (1);
 }
 
-static int		ft_dlred_handler(t_node *tree)
+static int		ft_dlred_handler(t_node *tree, t_mlist *mlist)
 {
 	int			fd;
 	char		*buff;
@@ -51,7 +51,7 @@ static int		ft_dlred_handler(t_node *tree)
 	{
 		ft_putstr("heredoc> ");
 		ft_set_term();
-		buff = ft_read_keys(ft_log_to_dlist());
+		buff = ft_read_keys(ft_log_to_dlist(), 1, mlist);
 		ft_reset_term();
 		ft_bzero(g_cmd, BUFF_SIZE);
 		g_idx = 0;
@@ -81,22 +81,24 @@ static int		ft_lred_handler(t_node *tree, t_fdlist *fdlist)
 	return (1);
 }
 
-int				ft_red_handler(t_node *tree, t_fdlist *fdlist, int check)
+int				ft_red_handler(t_node *tree, t_mlist *mlist, int check)
 {
 	int			ret;
+	t_fdlist	*fdlist;
 
+	fdlist = mlist->fdlist;
 	ret = 0;
 	if (!tree)
 		return (check);
 	if (tree->type == LEFT_RED && check)
 		ret = ft_lred_handler(tree, fdlist);
 	if (tree->type == DLEFT_RED && check)
-		ret = ft_dlred_handler(tree);
+		ret = ft_dlred_handler(tree, mlist);
 	if (tree->type == RIGHT_RED && check)
 		ret = ft_rred_handler(tree, fdlist);
 	if (tree->type == DRIGHT_RED && check)
 		ret = ft_drred_handler(tree, fdlist);
 	if (fdlist && fdlist->cur)
 		fdlist->cur = fdlist->cur->next;
-	return (ft_red_handler(tree->left, fdlist, ret));
+	return (ft_red_handler(tree->left, mlist, ret));
 }

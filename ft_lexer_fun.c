@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/04 14:34:16 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/04 17:56:25 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/17 19:47:19 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ void					ft_lexbquote(char **str, char *buf,
 	*str = (*str) + 1;
 	if (**str == '`' && buf[0] != '\0')
 	{
-			ft_tokenpushback(list, ft_strdup(buf), BQUOTE);
-			ft_bzero(buf, BUFF_SIZE);
-			*i = 0;
+		ft_tokenpushback(list, ft_strdup(buf), BQUOTE);
+		ft_bzero(buf, BUFF_SIZE);
+		*i = 0;
 	}
 	else if (**str != '`')
 	{
@@ -62,9 +62,9 @@ void					ft_lexdquote(char **str, char *buf,
 	*str = (*str) + 1;
 	if (**str == '\"' && buf[0] == '\0' && is_special((*str) + 1))
 	{
-			ft_tokenpushback(list, ft_strdup(buf), WORD);
-			ft_bzero(buf, BUFF_SIZE);
-			*i = 0;
+		ft_tokenpushback(list, ft_strdup(buf), WORD);
+		ft_bzero(buf, BUFF_SIZE);
+		*i = 0;
 	}
 	else if (**str != '\"')
 	{

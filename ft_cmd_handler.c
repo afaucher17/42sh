@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/15 14:46:12 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/14 16:43:45 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/17 20:47:13 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,20 +37,18 @@ char			**ft_arg_handler(t_node *tree, char *cmd)
 	return (com);
 }
 
-static void		ft_son(t_fdlist *fdlist, char **charenv, t_node *tree, int builtin)
+static void		ft_son(t_mlist *mlist, char **charenv, t_node *tree, int builtin)
 {
-	t_list		*env;
 	int			ret;
 	char		**cmd;
 
-	env = ft_duplicate(charenv);
 	cmd = NULL;
 	signal(SIGINT, SIG_DFL);
 	if (!builtin)
 		cmd = ft_arg_handler(tree, ft_checkpath(tree->data, charenv));
 	if (!cmd && !builtin)
 		exit(EXIT_SUCCESS);
-	if (!builtin && ft_red_handler(tree->left, fdlist, 1))
+	if (!builtin && ft_red_handler(tree->left, mlist, 1))
 	{
 		execve(cmd[0], cmd, charenv);
 		ft_notfnd(cmd[0]);
@@ -58,8 +56,8 @@ static void		ft_son(t_fdlist *fdlist, char **charenv, t_node *tree, int builtin)
 	else if (builtin)
 	{
 		ft_clear_tab(charenv);
-		ret = ft_builtin(&env, &fdlist, tree);
-		ft_list_clear(&env);
+		ret = ft_builtin(mlist, tree);
+		ft_list_clear(&(mlist->env));
 		ft_clear_tab(cmd);
 		exit(ret);
 	}
@@ -84,28 +82,28 @@ static int		ft_father(int pid, char **charenv, int **tpfd)
 	return (!WEXITSTATUS(waitvar));	
 }
 
-int				ft_cmd_handler(t_node *tree, t_list **env, int **tpfd, t_fdlist *fdlist)
+int				ft_cmd_handler(t_node *tree, t_mlist *mlist, int **tpfd)
 {
 	pid_t		pid;
 	char		**charenv;
 	int			builtin;
 
-	charenv = ft_tochar(*env);
+	charenv = ft_tochar(mlist->env);
 	if ((builtin = ft_is_builtin(tree->data)) && !tpfd[0] && !tpfd[1])
 	{
 		ft_clear_tab(charenv);
-		return (ft_builtin(env, &fdlist, tree));
+		return (ft_builtin(mlist, tree));
 	}
 	if ((pid = fork()) < 0)
 		return (0);
 	if (pid == 0)
 	{
 		ft_pfd_manage(tpfd[0], tpfd[1]);
-		ft_son(fdlist, charenv, tree, builtin);
+		ft_son(mlist, charenv, tree, builtin);
 	}
 	else
 	{
-		ft_red_handler(tree->left, fdlist, 0);
+		ft_red_handler(tree->left, mlist, 0);
 		return (ft_father(pid, charenv, tpfd));
 	}
 	return (0);
