@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/07 16:51:33 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/17 20:40:01 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/18 18:25:47 by jlinden          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,20 @@
 
 static int			ft_chdir(char *str)
 {
+	struct stat	s;
+
 	if (!access(str, F_OK))
 	{
-		if (!access(str, X_OK))
+		if (!stat(str, &s) && s.st_mode & S_IFDIR && !access(str, X_OK))
 		{
 			chdir(str);
 			return (1);
 		}
 		ft_putstr_fd(str, 2);
-		ft_putendl_fd(": Permission denied.", 2);
+		if (!(s.st_mode & S_IFDIR))
+			ft_putendl_fd(": Not a directory", 2);
+		else
+			ft_putendl_fd(": Permission denied.", 2);
 		return (0);
 	}
 	ft_putstr_fd(str, 2);

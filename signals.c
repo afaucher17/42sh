@@ -6,13 +6,14 @@
 /*   By: jlinden <jlinden@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/09 11:26:48 by jlinden           #+#    #+#             */
-/*   Updated: 2014/03/15 12:27:21 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/18 19:19:10 by jlinden          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <signal.h>
 #include <sys/ioctl.h>
 #include <termios.h>
+#include <unistd.h>
 #include "ft_select.h"
 
 static void	signal_handler(int sig)

@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/26 18:19:05 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/17 20:28:36 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/18 19:01:01 by jlinden          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ char			*ft_analyser(char *cmd, t_mlist *mlist)
 	}
 	else
 	{
-		signal(SIGINT, SIG_IGN);
+		signal(SIGINT, ft_sighand2);
 		close(pfd[1]);
 		dup2(pfd[0], 0);
 		while ((len = read(0, buf, BUFF_SIZE - 1)) > 0)

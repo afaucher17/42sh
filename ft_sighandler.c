@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/12/28 16:29:19 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/17 20:45:17 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/18 19:17:48 by jlinden          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,3 @@ void				ft_sighand2(int signal)
 	if (signal == SIGINT)
 		ft_putendl("");
 }
-
