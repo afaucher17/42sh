@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/11/22 18:54:37 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/07 17:35:26 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/25 21:56:47 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ char		*ft_strjoinx(int nb, ...)
 {
 	va_list	ap;
 	char	*args[nb + 1];
-	char 	*res;
+	char	*res;
 	int		i;
 	int		len;
 

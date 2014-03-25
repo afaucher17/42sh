@@ -6,19 +6,19 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/06 14:55:38 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/07 18:12:06 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/25 21:56:15 by tdieumeg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include	"libft.h"
+#include			"libft.h"
 
-char		*ft_itoa_base(int n, int base)
+char				*ft_itoa_base(int n, int base)
 {
-	int             digit;
-	const char      *tab = "0123456789abcdef";
-	unsigned long   numb;
-	char            *str;
-	
+	int				digit;
+	const char		*tab = "0123456789abcdef";
+	unsigned long	numb;
+	char			*str;
+
 	digit = 0;
 	numb = n;
 	while (n >= base)
