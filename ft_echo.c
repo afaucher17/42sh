@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/25 17:25:52 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/26 17:34:04 by jlinden          ###   ########.fr       */
+/*   Updated: 2014/03/26 21:11:14 by jlinden          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,18 +59,18 @@ static void					ft_putstr_echo(char *cmd)
 {
 	int						size;
 	int						i;
-	static const char		*t[10][2] =
+	static const char		*t[9][2] =
 
 	{
-	{"\\a", "\a"}, {"\\b", "\b"}, {"\\e", "\e"},
-	{"\\E", "\E"}, {"\\f", "\f"}, {"\\n", "\n"}, {"\\r", "\r"},
+	{"\\a", "\a"}, {"\\b", "\b"}, {"\\e", "\033"},
+	{"\\f", "\f"}, {"\\n", "\n"}, {"\\r", "\r"},
 	{"\\t", "\t"}, {"\\v", "\v"}, {"\\\\", "\\"}
 	};
 	while (*cmd)
 	{
 		i = -1;
 		size = 1;
-		while (++ i < 10)
+		while (++i < 9)
 			if (ft_strnequ(cmd, t[i][0], 2))
 			{
 				size = 2;
@@ -114,9 +114,12 @@ static int					ft_getoptions(char **cmd, int *res)
 int							ft_echo(char **cmd, t_mlist *mlist)
 {
 	int						i;
-	int						op[3] = {0, 0, 0};
+	int						op[3];
 
 	(void)mlist;
+	op[0] = 0;
+	op[1] = 0;
+	op[2] = 0;
 	i = 1 + ft_getoptions(cmd, op);
 	while (cmd[i])
 	{

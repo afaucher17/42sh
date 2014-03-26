@@ -6,7 +6,7 @@
 #    By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2013/12/27 14:53:18 by tdieumeg          #+#    #+#              #
-#    Updated: 2014/03/15 16:27:16 by tdieumeg         ###   ########.fr        #
+#    Updated: 2014/03/26 20:19:23 by jlinden          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ OBJ		= main.o \
 		  ft_builtin.o \
 		  ft_is_builtin.o \
 		  ft_cd.o \
+		  ft_cd_fun.o \
 		  ft_echo.o \
 		  ft_echo_utf.o \
 		  ft_checkpath.o \

@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/07 16:51:33 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/18 18:25:47 by jlinden          ###   ########.fr       */
+/*   Updated: 2014/03/26 20:18:10 by jlinden          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,16 +87,12 @@ int					ft_cd(char **cmd, t_mlist *mlist)
 		if ((tmp = ft_get_env("PWD", mlist->env)) != NULL)
 		{
 			pwd = ft_strsub(tmp->content, 4, ft_strlen(tmp->content) - 4);
-			free(tmp->content);
 			ret = getcwd(NULL, 0);
-			tmp->content = ft_strjoin("PWD=", ret);
+			ft_cd_freejoin(tmp, "PWD=", ret);
 			ft_strdel(&ret);
 		}
 		if ((tmp = ft_get_env("OLDPWD", mlist->env)) != NULL && pwd)
-		{
-			free(tmp->content);
-			tmp->content = ft_strjoin("OLDPWD=", pwd);
-		}
+			ft_cd_freejoin(tmp, "OLDPWD=", pwd);
 		else if (pwd)
 			ft_createoldpwd(pwd, mlist);
 		free(pwd);

@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/12 13:12:31 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/26 16:55:00 by jlinden          ###   ########.fr       */
+/*   Updated: 2014/03/26 21:31:06 by jlinden          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,22 +85,18 @@ static void			ft_path_exec(t_list **file_l, t_mlist *mlist,
 	while (env)
 	{
 		dirname = ft_strjoin(env->content, "/");
-		if ((pdir = opendir(env->content)) == NULL)
+		if ((pdir = opendir(env->content)))
 		{
-			free(dirname);
-			env = env->next;
-			continue ;
+			while ((pdirent = readdir(pdir)) != NULL)
+			{
+				if ((str = ft_uniformize(dirname, pdirent->d_name, 1)))
+					ft_lstpushback(file_l, str, ft_strlen(str) + 1);
+				free(str);
+			}
 		}
-		while ((pdirent = readdir(pdir)) != NULL)
-		{
-			if ((str = ft_uniformize(dirname, pdirent->d_name, 1)))
-				ft_lstpushback(file_l, str, ft_strlen(str) + 1);
-			free(str);
-		}
-		env = env->next;
 		free(dirname);
+		env = env->next;
 	}
-	ft_list_clear(&env);
 }
 
 char				*ft_autocomp(char *fullpath, int exec, t_mlist *mlist)

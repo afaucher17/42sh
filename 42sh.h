@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/05 12:42:10 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/26 18:05:45 by jlinden          ###   ########.fr       */
+/*   Updated: 2014/03/26 20:19:09 by jlinden          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,6 +201,11 @@ int				ft_is_builtin(char *cmd);
 ** ft_cd.c
 */
 int				ft_cd(char **cmd, t_mlist *mlist);
+
+/*
+** ft_cd_fun.c
+*/
+void			ft_cd_freejoin(t_list *tmp, const char *str, char *to_join);
 
 /*
 ** ft_echo.c
