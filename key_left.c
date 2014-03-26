@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   slct_key_left.c                                         :+:      :+:    :+:   */
+/*   key_left.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jlinden <jlinden@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/01/12 19:01:36 by jlinden           #+#    #+#             */
-/*   Updated: 2014/03/15 14:09:19 by tdieumeg         ###   ########.fr       */
+/*   Created: 2014/03/26 18:39:35 by jlinden           #+#    #+#             */
+/*   Updated: 2014/03/26 18:39:52 by jlinden          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "42sh.h"
 #include "ft_select.h"
 
-static t_lst	*left_overflow(t_select *slct)
+static t_lst	*left_overflow(t_select *g_slct)
 {
 	t_lst	*cursor;
 	t_lst	*save;
@@ -21,8 +21,8 @@ static t_lst	*left_overflow(t_select *slct)
 	int		max_iter;
 
 	save = NULL;
-	max_iter = (slct->size / ft_get_winsz()->ws_row) + 1;
-	cursor = slct->current;
+	max_iter = (g_slct->size / ft_get_winsz()->ws_row) + 1;
+	cursor = g_slct->current;
 	while (max_iter--)
 	{
 		i = ft_get_winsz()->ws_row;
@@ -37,16 +37,17 @@ static t_lst	*left_overflow(t_select *slct)
 			save = cursor->prev;
 	}
 	if (!save && !cursor)
-		save = slct->current->prev;
+		save = g_slct->current->prev;
 	return (save);
 }
-void			slct_key_left(t_select *slct, int *pfd)
+
+void			slct_key_left(t_select *g_slct, int *pfd)
 {
 	t_lst	*cursor;
 	int		i;
 
 	(void)pfd;
-	if ((cursor = slct->current) == slct->list)
+	if ((cursor = g_slct->current) == g_slct->list)
 		return ;
 	i = ft_get_winsz()->ws_row;
 	if (cursor)
@@ -54,11 +55,11 @@ void			slct_key_left(t_select *slct, int *pfd)
 		while (cursor && i--)
 			cursor = cursor->prev;
 		if (cursor)
-			slct->current = cursor;
+			g_slct->current = cursor;
 		else
 		{
-			slct->current = left_overflow(slct);
+			g_slct->current = left_overflow(g_slct);
 		}
-		draw_list(slct);
+		draw_list(g_slct);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/12/28 17:22:09 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/17 20:44:53 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/26 17:00:45 by jlinden          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,16 +92,17 @@ int						ft_builtin(t_mlist *mlist, t_node *tree)
 	int					i;
 	int					ret;
 	char				**cmd;
-	static t_builtin	builtin[6] = {
-		{"exit", ft_exit}, {"env", ft_env}, {"setenv", ft_setenv},
-		{"unsetenv", ft_unsetenv}, {"cd", ft_cd}, {"echo", ft_echo}};
+	static t_builtin	builtin[6] =
 
+	{
+	{"exit", ft_exit}, {"env", ft_env}, {"setenv", ft_setenv},
+	{"unsetenv", ft_unsetenv}, {"cd", ft_cd}, {"echo", ft_echo}
+	};
 	cmd = ft_arg_handler(tree, ft_strdup(tree->data));
 	if (mlist->env && ft_red_handler(tree->left, mlist, 1))
 	{
-		i = 0;
-		while (i < 6)
-		{
+		i = -1;
+		while (++i < 6)
 			if (ft_strequ(cmd[0], builtin[i].cmd))
 			{
 				ret = builtin[i].f(cmd, mlist);
@@ -110,8 +111,6 @@ int						ft_builtin(t_mlist *mlist, t_node *tree)
 				dup2(ft_reset_std()[1], 1);
 				return (ret);
 			}
-			i++;
-		}
 	}
 	return (0);
 }

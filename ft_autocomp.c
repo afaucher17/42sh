@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/12 13:12:31 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/17 21:27:58 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/26 16:55:00 by jlinden          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static char			*ft_get_dir(char *fullpath)
 }
 
 static void			ft_path_exec(t_list **file_l, t_mlist *mlist,
-									DIR *pDir, struct dirent *pDirent)
+									DIR *pdir, struct dirent *pdirent)
 {
 	char			*sub;
 	char			*str;
@@ -85,15 +85,15 @@ static void			ft_path_exec(t_list **file_l, t_mlist *mlist,
 	while (env)
 	{
 		dirname = ft_strjoin(env->content, "/");
-		if ((pDir = opendir(env->content)) == NULL)
+		if ((pdir = opendir(env->content)) == NULL)
 		{
 			free(dirname);
 			env = env->next;
 			continue ;
 		}
-		while ((pDirent = readdir(pDir)) != NULL)
+		while ((pdirent = readdir(pdir)) != NULL)
 		{
-			if ((str = ft_uniformize(dirname, pDirent->d_name, 1)))
+			if ((str = ft_uniformize(dirname, pdirent->d_name, 1)))
 				ft_lstpushback(file_l, str, ft_strlen(str) + 1);
 			free(str);
 		}
@@ -105,34 +105,34 @@ static void			ft_path_exec(t_list **file_l, t_mlist *mlist,
 
 char				*ft_autocomp(char *fullpath, int exec, t_mlist *mlist)
 {
-	DIR				*pDir;
-	struct dirent	*pDirent;
+	DIR				*pdir;
+	struct dirent	*pdirent;
 	char			*dirname;
 	t_list			*file_l;
 	char			*str;
 
 	file_l = NULL;
-	pDir = NULL;
-	pDirent = NULL;
+	pdir = NULL;
+	pdirent = NULL;
 	dirname = ft_get_dir(fullpath);
 	if (exec && !dirname)
-		ft_path_exec(&file_l, mlist, pDir, pDirent);
+		ft_path_exec(&file_l, mlist, pdir, pdirent);
 	else
 	{
 		if (!dirname)
 			dirname = ft_strdup("./");
-		if ((pDir = opendir(dirname)) == NULL)
+		if ((pdir = opendir(dirname)) == NULL)
 		{
 			free(dirname);
 			return (NULL);
 		}
-		while ((pDirent = readdir(pDir)) != NULL)
+		while ((pdirent = readdir(pdir)) != NULL)
 		{
-			if ((str = ft_uniformize(dirname, pDirent->d_name, exec)))
+			if ((str = ft_uniformize(dirname, pdirent->d_name, exec)))
 				ft_lstpushback(&file_l, str, ft_strlen(str) + 1);
 			free(str);
 		}
-		closedir(pDir);
+		closedir(pdir);
 	}
 	free(dirname);
 	return (ft_complete(file_l, ft_get_file(fullpath)));

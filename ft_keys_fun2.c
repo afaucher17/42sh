@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/06 12:16:52 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/17 21:31:42 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/26 15:21:56 by jlinden          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ void				ft_tab(t_dlist **list, int visual, t_mlist *mlist)
 		ft_memmove(g_cmd + g_idx, str, ft_strlen(str));
 		ft_putstr(g_cmd + g_idx);
 		g_idx += ft_strlen(g_cmd + g_idx);
-		if (ft_get_winsz()->ws_col > 0 
+		if (ft_get_winsz()->ws_col > 0
 			&& ((ft_strlen(g_cmd) + ft_strlen(PROMPT))
 			% ft_get_winsz()->ws_col) == 0)
 			tputs(tgetstr("do", NULL), 1, ft_putchar_tc);

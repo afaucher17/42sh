@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/05 17:07:08 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/14 18:57:13 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/26 18:34:37 by jlinden          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ t_copy					*ft_get_copy(void)
 	return (copy);
 }
 
-char			*ft_insertchar(char c, char *cmd, int idx)
+char					*ft_insertchar(char c, char *cmd, int idx)
 {
 	char		*new;
 	int			i;
@@ -71,7 +71,7 @@ char			*ft_insertchar(char c, char *cmd, int idx)
 	return (new);
 }
 
-void			ft_close_fdlist(t_fdlist **fdlist)
+void					ft_close_fdlist(t_fdlist **fdlist)
 {
 	t_list		*save;
 	int			fd;

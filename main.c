@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/12/28 11:15:15 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/17 20:43:22 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/24 17:39:18 by jlinden          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int				main(int ac, char **av, char **environ)
 	char		*buff;
 	t_token		*list;
 	t_mlist		*mlist;
-	
+
 	(void)ac;
 	(void)av;
 	buff = NULL;

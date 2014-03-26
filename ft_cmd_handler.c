@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/15 14:46:12 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/17 20:47:13 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/26 17:03:08 by jlinden          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ char			**ft_arg_handler(t_node *tree, char *cmd)
 	return (com);
 }
 
-static void		ft_son(t_mlist *mlist, char **charenv, t_node *tree, int builtin)
+static void		ft_son(t_mlist *mlist, char **charenv, t_node *tree
+						, int builtin)
 {
 	int			ret;
 	char		**cmd;
@@ -79,7 +80,7 @@ static int		ft_father(int pid, char **charenv, int **tpfd)
 	ft_clear_tab(charenv);
 	if (WIFSIGNALED(waitvar))
 		return (0);
-	return (!WEXITSTATUS(waitvar));	
+	return (!WEXITSTATUS(waitvar));
 }
 
 int				ft_cmd_handler(t_node *tree, t_mlist *mlist, int **tpfd)

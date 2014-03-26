@@ -6,28 +6,28 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/04 18:19:27 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/17 20:48:43 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/26 18:19:33 by jlinden          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include			"42sh.h"
 
-char 				*g_cmd = NULL;
+char				*g_cmd = NULL;
 int					g_idx = 0;
 
-static int			ft_get_fun(int buff, t_dlist **list, int noctrld,
-								t_mlist *mlist)
+static int			ft_get_fun(int buff, t_dlist **list, int noctrld
+								, t_mlist *mlist)
 {
 	int				j;
 	static t_keys	key_tab[14] =
-	{
-		{DELETE, ft_delete}, {BACKSPACE, ft_backspace}, {HOME, ft_home},
-		{END, ft_end}, {ALT_U_A, ft_alt_u_arrow}, {ALT_D_A, ft_alt_d_arrow},
-		{ALT_L_A, ft_alt_l_arrow}, {ALT_R_A, ft_alt_r_arrow},
-		{U_ARROW, ft_u_arrow}, {D_ARROW, ft_d_arrow}, {L_ARROW, ft_l_arrow},
-		{R_ARROW, ft_r_arrow}, {TAB, ft_tab}, {CTRL_D, ft_ctrl_d}
-	};
 
+	{
+	{DELETE, ft_delete}, {BACKSPACE, ft_backspace}, {HOME, ft_home},
+	{END, ft_end}, {ALT_U_A, ft_alt_u_arrow}, {ALT_D_A, ft_alt_d_arrow},
+	{ALT_L_A, ft_alt_l_arrow}, {ALT_R_A, ft_alt_r_arrow},
+	{U_ARROW, ft_u_arrow}, {D_ARROW, ft_d_arrow}, {L_ARROW, ft_l_arrow},
+	{R_ARROW, ft_r_arrow}, {TAB, ft_tab}, {CTRL_D, ft_ctrl_d}
+	};
 	j = 0;
 	while (j < (14 - noctrld))
 	{

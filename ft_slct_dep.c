@@ -6,7 +6,7 @@
 /*   By: jlinden <jlinden@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/04 14:44:12 by jlinden           #+#    #+#             */
-/*   Updated: 2014/03/15 15:11:42 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/26 18:22:44 by jlinden          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,31 +19,31 @@
 #include "ft_select.h"
 #include "libft.h"
 
-t_select	*slct;
+t_select	*g_slct;
 
-void	load_term(void)
+void		load_term(void)
 {
 	put_flag(TERM_INIT);
 	put_flag(DELETE_LINE);
 	put_flag(HIDE_CURSOR);
 }
 
-void	restore_term(void)
+void		restore_term(void)
 {
 	put_flag(SHOW_CURSOR);
 	put_flag(TERM_END);
 }
 
-void	proper_exit(int ret)
+void		proper_exit(int ret)
 {
 	restore_term();
-	close(slct->fd);
-	lst_free(&(slct->list));
-	free(slct);
+	close(g_slct->fd);
+	lst_free(&(g_slct->list));
+	free(g_slct);
 	exit(ret);
 }
 
-t_lst	*ft_convert(t_list *file_l, int *size)
+t_lst		*ft_convert(t_list *file_l, int *size)
 {
 	t_lst	*new;
 	t_list	*save;
@@ -60,7 +60,7 @@ t_lst	*ft_convert(t_list *file_l, int *size)
 	return (new);
 }
 
-void	init_slct(t_select *obj, t_list *file_l)
+void		init_g_slct(t_select *obj, t_list *file_l)
 {
 	int		size;
 
@@ -72,20 +72,20 @@ void	init_slct(t_select *obj, t_list *file_l)
 	obj->size = size;
 }
 
-int		ft_slct_dep(t_list *file_l, int *pfd)
+int			ft_slct_dep(t_list *file_l, int *pfd)
 {
 	int		buf;
 
 	load_signals();
-	slct = (t_select *)malloc(sizeof(t_select));
-	init_slct(slct, file_l);
+	g_slct = (t_select *)malloc(sizeof(t_select));
+	init_g_slct(g_slct, file_l);
 	load_term();
-	draw_list(slct);
+	draw_list(g_slct);
 	while (42)
 	{
 		buf = 0;
 		read(STDIN_FILENO, &buf, 4);
-		key_dispatch(slct, buf, pfd);
+		key_dispatch(g_slct, buf, pfd);
 	}
 	restore_term();
 	return (0);

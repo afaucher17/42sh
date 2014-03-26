@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/06 19:37:44 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/07 18:24:15 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/26 17:59:22 by jlinden          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static char				*ft_solverdep(char **mold, char *seq,
 	return (res);
 }
 
-static char					*ft_solver(int size, char *seq)
+static char				*ft_solver(int size, char *seq)
 {
 	char					**mold;
 	char					*res;
@@ -68,7 +68,7 @@ static char					*ft_solver(int size, char *seq)
 	return (ft_solverdep(mold, seq, size, res));
 }
 
-void						ft_itoutf(int nb)
+void					ft_itoutf(int nb)
 {
 	int						bound;
 	static const int		bocp[6] = {7, 11, 16, 21, 26, 31};
@@ -76,11 +76,11 @@ void						ft_itoutf(int nb)
 	char					*sequence;
 	char					*res;
 
-	bound = (nb >= 0 && nb <= 0x7F) ? 0 : 0; 
-	bound = (nb >= 0x80 && nb <= 0x7FF) ? 1 : bound; 
-	bound = (nb >= 0x800 && nb <= 0xFFFF) ? 2 : bound; 
-	bound = (nb >= 0x10000 && nb <= 0x1FFFFF) ? 3 : bound; 
-	bound = (nb >= 0x200000 && nb <= 0x3FFFFFF) ? 4 : bound; 
+	bound = (nb >= 0 && nb <= 0x7F) ? 0 : 0;
+	bound = (nb >= 0x80 && nb <= 0x7FF) ? 1 : bound;
+	bound = (nb >= 0x800 && nb <= 0xFFFF) ? 2 : bound;
+	bound = (nb >= 0x10000 && nb <= 0x1FFFFF) ? 3 : bound;
+	bound = (nb >= 0x200000 && nb <= 0x3FFFFFF) ? 4 : bound;
 	bound = (nb >= 0x4000000 && nb <= 0x7FFFFFFF) ? 5 : bound;
 	sequence = ft_strnew(bocp[bound]);
 	ft_memset(sequence, '0', bocp[bound]);

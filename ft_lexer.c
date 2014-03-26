@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lexer_bis.c                                     :+:      :+:    :+:   */
+/*   ft_lexer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/04 13:37:20 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/07 21:09:36 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/26 18:06:19 by jlinden          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "42sh.h"
 
-static enum e_state		ft_getstate(char **str, enum e_state state)
+t_state		ft_getstate(char **str, enum e_state state)
 {
 	if (state == L_MAIN && **str == '`')
 		return (L_BQUOTEM);
@@ -34,11 +34,11 @@ static enum e_state		ft_getstate(char **str, enum e_state state)
 	return (state);
 }
 
-void					ft_lexer(char *str, t_token **list, int save_com)
+void		ft_lexer(char *str, t_token **list, int save_com)
 {
 	char				*buf;
 	char				*save;
-	enum e_state		state;
+	t_state				state;
 	int					i;
 
 	i = 0;

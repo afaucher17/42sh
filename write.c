@@ -17,7 +17,7 @@
 
 int		tputs_putc(int c)
 {
-	write(slct->fd, &c, 1);
+	write(g_slct->fd, &c, 1);
 	return (1);
 }
 
@@ -32,7 +32,7 @@ void	putstr_flag(char *str, const int style)
 		put_flag(UNDERLINE_S);
 	if (style & REV_VIDEO)
 		put_flag(REV_VIDEO_S);
-	ft_putstr_fd(str, slct->fd);
+	ft_putstr_fd(str, g_slct->fd);
 	if (style & UNDERLINE)
 		put_flag(UNDERLINE_E);
 	if (style & REV_VIDEO)

@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/28 10:14:03 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/17 20:47:53 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/26 18:01:58 by jlinden          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,8 @@ static t_token	*ft_if_bq(t_token **bquote, t_mlist *mlist, t_token **save,
 
 void			ft_get_bquote(t_token **list, t_mlist *mlist)
 {
-	t_token     *save;
-	t_token     *bquote;
+	t_token		*save;
+	t_token		*bquote;
 	t_token		*prev;
 
 	save = *list;

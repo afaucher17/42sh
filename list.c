@@ -57,19 +57,19 @@ void			lst_free(t_lst **list)
 	*list = NULL;
 }
 
-void			lst_delelem(t_select *slct)
+void			lst_delelem(t_select *g_slct)
 {
 	t_lst	*current;
 
-	if (slct->list)
+	if (g_slct->list)
 	{
-		current = slct->current;
+		current = g_slct->current;
 		if (current->next)
 			current->next->prev = (current->prev) ? current->prev : NULL;
 		if (current->prev)
 			current->prev->next = (current->next) ? current->next : NULL;
 		else
-			slct->list = current->next;
+			g_slct->list = current->next;
 		free(current);
 	}
 }

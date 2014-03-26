@@ -6,7 +6,7 @@
 /*   By: tdieumeg <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/23 17:03:16 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/02/04 15:45:26 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/26 18:08:31 by jlinden          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ t_node		*ft_nodenew(char type)
 	t_node	*new;
 
 	if ((new = (t_node*)malloc(sizeof(t_node))) == NULL)
-			return (NULL);
+		return (NULL);
 	new->type = type;
 	new->left = NULL;
 	new->right = NULL;

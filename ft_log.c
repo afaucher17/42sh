@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/26 14:24:05 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/17 11:39:34 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/26 18:07:52 by jlinden          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int		cut_at_newline(char **save_buff, char **line)
 {
 	char		*delimiter;
 
-	if ((delimiter = ft_strchr(*save_buff, '\3')))	
+	if ((delimiter = ft_strchr(*save_buff, '\3')))
 	{
 		*line = ft_strsub(*save_buff, 0, delimiter - *save_buff);
 		ft_strcpy(*save_buff, delimiter + 1);

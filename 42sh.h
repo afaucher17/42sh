@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/05 12:42:10 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/17 20:56:35 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/26 18:05:45 by jlinden          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ typedef struct		s_builtin
 	int				(*f)(char **, t_mlist *);
 }					t_builtin;
 
-enum				e_state
+typedef enum		e_state
 {
 	L_MAIN = 0,
 	L_SPEC,
@@ -118,7 +118,7 @@ enum				e_state
 	L_BQUOTED,
 	L_DQUOTE,
 	L_QUOTE
-};
+}					t_state;
 
 /*
 ** main.c

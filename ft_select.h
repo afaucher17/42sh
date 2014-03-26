@@ -6,7 +6,7 @@
 /*   By: jlinden <jlinden@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/04 15:02:29 by jlinden           #+#    #+#             */
-/*   Updated: 2014/03/15 15:43:56 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/26 18:42:32 by jlinden          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,9 @@ typedef struct	s_keys2
 	int		key;
 	void	(*key_run)(t_select *, int *);
 }				t_keys2;
-extern t_select	*slct;
+
+extern t_select	*g_slct;
+
 /*
 ** TERM
 */

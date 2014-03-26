@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/26 18:19:05 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/18 19:01:01 by jlinden          ###   ########.fr       */
+/*   Updated: 2014/03/19 15:27:53 by jlinden          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ char			*ft_son(char *cmd, t_mlist *mlist)
 	i = 0;
 	while (cmd[i])
 	{
+		if (cmd[i] == '\\' && (i = i + 2))
+			continue ;
 		special[0] ^= (cmd[i] == '\"' && !special[1]);
 		special[1] ^= (cmd[i] == '\'' && !special[0]);
 		special[2] ^= (cmd[i] == '`' && !special[1]);

@@ -6,13 +6,13 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/06 12:27:20 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/18 18:56:52 by jlinden          ###   ########.fr       */
+/*   Updated: 2014/03/26 18:04:37 by jlinden          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include			"42sh.h"
 
-void				ft_alt_u_arrow(t_dlist **list, int visual, t_mlist *mlist)
+void	ft_alt_u_arrow(t_dlist **list, int visual, t_mlist *mlist)
 {
 	int					x;
 
@@ -26,7 +26,7 @@ void				ft_alt_u_arrow(t_dlist **list, int visual, t_mlist *mlist)
 	}
 }
 
-void					ft_alt_d_arrow(t_dlist **list, int visual, t_mlist *mlist)
+void	ft_alt_d_arrow(t_dlist **list, int visual, t_mlist *mlist)
 {
 	int					x;
 
@@ -40,7 +40,7 @@ void					ft_alt_d_arrow(t_dlist **list, int visual, t_mlist *mlist)
 	}
 }
 
-void					ft_alt_l_arrow(t_dlist **list, int visual, t_mlist *mlist)
+void	ft_alt_l_arrow(t_dlist **list, int visual, t_mlist *mlist)
 {
 	while ((g_idx - 1) >= 0 && g_cmd[g_idx - 1] == ' ')
 	{
@@ -56,7 +56,7 @@ void					ft_alt_l_arrow(t_dlist **list, int visual, t_mlist *mlist)
 	}
 }
 
-void				ft_alt_r_arrow(t_dlist **list, int visual, t_mlist *mlist)
+void	ft_alt_r_arrow(t_dlist **list, int visual, t_mlist *mlist)
 {
 	while (g_cmd[g_idx] && g_cmd[g_idx] != ' ')
 	{
@@ -72,7 +72,7 @@ void				ft_alt_r_arrow(t_dlist **list, int visual, t_mlist *mlist)
 	}
 }
 
-void				ft_return(t_dlist **list, int visual, t_mlist *mlist)
+void	ft_return(t_dlist **list, int visual, t_mlist *mlist)
 {
 	(void)visual;
 	ft_get_copy()->visual_mode = 0;
