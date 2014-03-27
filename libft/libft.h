@@ -6,7 +6,7 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/11/23 16:14:12 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/17 11:11:21 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/27 11:59:06 by jlinden          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ char			*ft_strchr(const char *s, int c);
 void			ft_strclr(char *s);
 int				ft_strcmp(const char *s1, const char *s2);
 char			*ft_strcpy(char *s1, const char *s2);
-void			ft_strdel(char **as);
+char			*ft_strdel(char **as);
 char			*ft_strdup(const char *s1);
 int				ft_strequ(char const *s1, char const *s2);
 void			ft_striter(char *s, void (*f)(char *));

@@ -6,11 +6,11 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/25 17:25:52 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/26 21:11:14 by jlinden          ###   ########.fr       */
+/*   Updated: 2014/03/27 11:52:48 by jlinden          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "42sh.h"
+#include "sh42.h"
 
 static int					ft_isinbase(char *str, int basenb)
 {

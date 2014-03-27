@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "42sh.h"
+#include "sh42.h"
 
 static char				*ft_solverdep(char **mold, char *seq,
 										int size, char *res)

@@ -6,11 +6,11 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/24 14:31:16 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/15 19:03:32 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/27 10:43:46 by jlinden          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include		"42sh.h"
+#include		"sh42.h"
 
 static char		parse_arg(t_token **list, t_node **tree)
 {
@@ -74,8 +74,8 @@ static char		parse_com(t_token **list, t_node **tree)
 					|| parse_arg(list, &node->right)))
 			save = *list;
 	}
-	if ((red || com) && (*list = save) && (*tree = node))
-		return (1);
+	if ((red || com) && (*list = save))
+		return ((*tree = node) != NULL);
 	ft_clear_tree(&node);
 	*list = save;
 	return (0);

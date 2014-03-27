@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include		"42sh.h"
+#include		"sh42.h"
 
 static int		ft_drred_handler(t_node *tree, t_fdlist *fdlist)
 {

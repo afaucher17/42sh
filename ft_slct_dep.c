@@ -6,7 +6,7 @@
 /*   By: jlinden <jlinden@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/04 14:44:12 by jlinden           #+#    #+#             */
-/*   Updated: 2014/03/26 18:22:44 by jlinden          ###   ########.fr       */
+/*   Updated: 2014/03/27 14:13:05 by jlinden          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,23 +41,6 @@ void		proper_exit(int ret)
 	lst_free(&(g_slct->list));
 	free(g_slct);
 	exit(ret);
-}
-
-t_lst		*ft_convert(t_list *file_l, int *size)
-{
-	t_lst	*new;
-	t_list	*save;
-
-	new = NULL;
-	save = file_l;
-	while (save)
-	{
-		(*size)++;
-		lst_pushback(&new, (char*)(save->content));
-		save = save->next;
-	}
-	ft_list_clear(&file_l);
-	return (new);
 }
 
 void		init_g_slct(t_select *obj, t_list *file_l)

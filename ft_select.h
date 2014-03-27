@@ -6,7 +6,7 @@
 /*   By: jlinden <jlinden@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/04 15:02:29 by jlinden           #+#    #+#             */
-/*   Updated: 2014/03/26 18:42:32 by jlinden          ###   ########.fr       */
+/*   Updated: 2014/03/27 15:02:32 by jlinden          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,16 @@
 
 # include <stdlib.h>
 # include <termios.h>
-typedef struct	s_lst
+# include "sh42.h"
+typedef struct		s_lst
 {
 	char			*label;
 	size_t			length;
 	int				selected;
 	struct s_lst	*next;
 	struct s_lst	*prev;
-}				t_lst;
-typedef struct	s_select
+}					t_lst;
+typedef struct		s_select
 {
 	t_lst			*list;
 	t_lst			*current;
@@ -56,50 +57,54 @@ typedef struct	s_select
 	size_t			margin;
 	size_t			size;
 	struct winsize	wsize;
-}				t_select;
-typedef struct	s_keys2
+}					t_select;
+typedef struct		s_keys2
 {
-	int		key;
-	void	(*key_run)(t_select *, int *);
-}				t_keys2;
+	int				key;
+	void			(*key_run)(t_select *, int *);
+}					t_keys2;
 
-extern t_select	*g_slct;
+extern t_select		*g_slct;
 
 /*
 ** TERM
 */
-void	move_to(int x, int y);
-void	load_term(void);
-void	restore_term(void);
-void	proper_exit(int ret);
-size_t	get_margin(t_select *slct);
+void				move_to(int x, int y);
+void				load_term(void);
+void				restore_term(void);
+void				proper_exit(int ret);
+size_t				get_margin(t_select *slct);
 /*
 ** LISTS
 */
-void	lst_pushback(t_lst **list, char *str);
-t_lst	*fill_list(t_lst **list, int ac, char **av);
-void	draw_list(t_select *slct);
-void	lst_delelem(t_select *slct);
-void	lst_free(t_lst **lst);
+void				lst_pushback(t_lst **list, char *str);
+t_lst				*fill_list(t_lst **list, int ac, char **av);
+void				draw_list(t_select *slct);
+void				lst_delelem(t_select *slct);
+void				lst_free(t_lst **lst);
 /*
 ** WRITE
 */
-int		tputs_putc(int c);
-void	put_flag(const char *flag);
-void	putstr_flag(char *str, const int style);
-void	put_error(const char *str);
+int					tputs_putc(int c);
+void				put_flag(const char *flag);
+void				putstr_flag(char *str, const int style);
+void				put_error(const char *str);
 /*
 ** SIGNALS
 */
-void	load_signals(void);
+void				load_signals(void);
 /*
 ** KEYS
 */
-void	key_dispatch(t_select *slct, int key, int *pfd);
-void	slct_key_down(t_select *slct, int *pfd);
-void	slct_key_escape(t_select *slct, int *pfd);
-void	slct_key_left(t_select *slct, int *pfd);
-void	slct_key_return(t_select *slct, int *pfd);
-void	slct_key_right(t_select *slct, int *pfd);
-void	slct_key_up(t_select *slct, int *pfd);
-#endif /* !FT_SELECT_H */
+void				key_dispatch(t_select *slct, int key, int *pfd);
+void				slct_key_down(t_select *slct, int *pfd);
+void				slct_key_escape(t_select *slct, int *pfd);
+void				slct_key_left(t_select *slct, int *pfd);
+void				slct_key_return(t_select *slct, int *pfd);
+void				slct_key_right(t_select *slct, int *pfd);
+void				slct_key_up(t_select *slct, int *pfd);
+/*
+** COMPAT
+*/
+t_lst				*ft_convert(t_list *file_l, int *size);
+#endif

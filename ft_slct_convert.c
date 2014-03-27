@@ -1,20 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_cd_fun.c                                        :+:      :+:    :+:   */
+/*   ft_slct_convert.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jlinden <jlinden@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/03/26 20:14:11 by jlinden           #+#    #+#             */
-/*   Updated: 2014/03/26 20:16:58 by jlinden          ###   ########.fr       */
+/*   Created: 2014/03/27 14:12:01 by jlinden           #+#    #+#             */
+/*   Updated: 2014/03/27 14:13:06 by jlinden          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "sh42.h"
+#include "ft_select.h"
+#include "libft.h"
 
-void	ft_cd_freejoin(t_list *tmp, const char *str, char *to_join)
+t_lst		*ft_convert(t_list *file_l, int *size)
 {
-	if (tmp)
-		free(tmp->content);
-	tmp->content = ft_strjoin(str, to_join);
+	t_lst	*new;
+	t_list	*save;
+
+	new = NULL;
+	save = file_l;
+	while (save)
+	{
+		(*size)++;
+		lst_pushback(&new, (char*)(save->content));
+		save = save->next;
+	}
+	ft_list_clear(&file_l);
+	return (new);
 }

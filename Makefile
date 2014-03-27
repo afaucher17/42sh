@@ -6,7 +6,7 @@
 #    By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2013/12/27 14:53:18 by tdieumeg          #+#    #+#              #
-#    Updated: 2014/03/26 20:19:23 by jlinden          ###   ########.fr        #
+#    Updated: 2014/03/27 15:02:15 by jlinden          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME	= 42sh
 
 CC		= gcc
 
-DEPS	= 42sh.h
+DEPS	= sh42.h
 
 OBJ		= main.o \
 		  ft_analyser.o \
@@ -45,6 +45,7 @@ OBJ		= main.o \
 		  ft_keys_fun.o \
 		  ft_keys_fun2.o \
 		  ft_keys_fun3.o \
+		  ft_keys_fun4.o \
 		  ft_putchar_tc.o \
 		  ft_log.o \
 		  ft_error.o \
@@ -53,6 +54,7 @@ OBJ		= main.o \
 		  ft_autocomp_fun.o \
 		  ft_select.o \
 		  ft_slct_dep.o \
+		  ft_slct_convert.o \
 		  draw_list.o \
 		  key_down.o \
 		  key_up.o \

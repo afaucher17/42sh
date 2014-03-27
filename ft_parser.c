@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "42sh.h"
+#include "sh42.h"
 
 static int			is_logic(char *str, t_node *node)
 {

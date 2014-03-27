@@ -6,11 +6,11 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/12 15:00:51 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/17 11:56:08 by tdieumeg         ###   ########.fr       */
+/*   Updated: 2014/03/27 11:30:49 by jlinden          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include			"42sh.h"
+#include			"sh42.h"
 
 static void			ft_delcur(t_list **cur, int i, char *filename)
 {
@@ -78,10 +78,9 @@ static char			*ft_chk_list(t_list *file_l, char *filename)
 		i++;
 		file_l = save;
 	}
-	if (ft_strlen(buf) != 0)
-		return (buf);
-	free(buf);
-	return (NULL);
+	if (ft_strlen(buf) == 0)
+		ft_strdel(&buf);
+	return (buf);
 }
 
 char				*ft_complete(t_list *file_l, char *filename)

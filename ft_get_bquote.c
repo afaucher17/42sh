@@ -6,11 +6,11 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/28 10:14:03 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/26 18:01:58 by jlinden          ###   ########.fr       */
+/*   Updated: 2014/03/27 12:59:08 by jlinden          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include		"42sh.h"
+#include		"sh42.h"
 
 static void		ft_bq_son(int *pfd, t_token **bquote, t_mlist *mlist)
 {
@@ -91,22 +91,13 @@ void			ft_get_bquote(t_token **list, t_mlist *mlist)
 		if (save->type == BQUOTE)
 		{
 			ft_lexer(save->data, &bquote, 0);
-			free(save->data);
-			save->data = NULL;
-			if (bquote)
-			{
-				if (prev != NULL)
-					prev->next = ft_if_bq(&bquote, mlist, &save, save->next);
-				else
-					*list = ft_if_bq(&bquote, mlist, &save, save->next);
-			}
+			ft_strdel(&(save->data));
+			if (prev != NULL)
+				prev->next = (bquote) ?
+					ft_if_bq(&bquote, mlist, &save, save->next) : NULL;
 			else
-			{
-				if (prev != NULL)
-					prev->next = NULL;
-				else
-					*list = NULL;
-			}
+				*list = (bquote) ?
+					ft_if_bq(&bquote, mlist, &save, save->next) : NULL;
 		}
 		prev = save;
 		if (save)

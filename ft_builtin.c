@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include			"42sh.h"
+#include			"sh42.h"
 
 static int				ft_env(char **cmd, t_mlist *mlist)
 {

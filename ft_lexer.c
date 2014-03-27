@@ -6,11 +6,11 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/04 13:37:20 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/26 18:06:19 by jlinden          ###   ########.fr       */
+/*   Updated: 2014/03/27 12:07:28 by jlinden          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "42sh.h"
+#include "sh42.h"
 
 t_state		ft_getstate(char **str, enum e_state state)
 {
@@ -34,6 +34,13 @@ t_state		ft_getstate(char **str, enum e_state state)
 	return (state);
 }
 
+static void	ft_lexer_init(int *i, t_state *state, char **buf)
+{
+	*i = 0;
+	*state = L_MAIN;
+	*buf = ft_strnew(BUFF_SIZE);
+}
+
 void		ft_lexer(char *str, t_token **list, int save_com)
 {
 	char				*buf;
@@ -41,10 +48,8 @@ void		ft_lexer(char *str, t_token **list, int save_com)
 	t_state				state;
 	int					i;
 
-	i = 0;
-	state = L_MAIN;
+	ft_lexer_init(&i, &state, &buf);
 	save = str;
-	buf = ft_strnew(BUFF_SIZE);
 	while (str && *str)
 	{
 		state = ft_getstate(&str, state);

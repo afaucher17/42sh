@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include <unistd.h>
-#include "42sh.h"
+#include "sh42.h"
 #include "libft.h"
 
 static char	*proper_join(char *s1, char *s2)

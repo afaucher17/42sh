@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "42sh.h"
+#include "sh42.h"
 #include "ft_select.h"
 
 static t_lst	*left_overflow(t_select *g_slct)

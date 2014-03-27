@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "42sh.h"
+#include "sh42.h"
 
 static char		*ft_wait_finish(char *str, t_mlist *mlist)
 {

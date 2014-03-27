@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include		"42sh.h"
+#include		"sh42.h"
 
 static char		*checkpath_dep(t_list *save, char *cmd)
 {

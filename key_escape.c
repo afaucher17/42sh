@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "42sh.h"
+#include "sh42.h"
 #include "ft_select.h"
 
 void	slct_key_escape(t_select *g_slct, int *pfd)

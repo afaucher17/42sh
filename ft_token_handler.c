@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include		"42sh.h"
+#include		"sh42.h"
 
 static int		ft_pipe_handler(t_node *tree, t_mlist *mlist, int *pfd)
 {

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include		"42sh.h"
+#include		"sh42.h"
 
 static void		ft_fdlistpushback(t_fdlist **fdlist, int fd)
 {

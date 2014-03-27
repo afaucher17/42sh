@@ -6,11 +6,11 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/13 15:06:34 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/18 19:37:28 by jlinden          ###   ########.fr       */
+/*   Updated: 2014/03/27 11:11:14 by jlinden          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include			"42sh.h"
+#include			"sh42.h"
 #include			"ft_select.h"
 
 static char			*ft_father(int *pfd)
@@ -47,8 +47,7 @@ char				*ft_select(t_list *file_l, char *filename)
 	ret = NULL;
 	tmp = NULL;
 	pipe(pfd);
-	pid = fork();
-	if (pid == 0)
+	if ((pid = fork()) == 0)
 	{
 		load_signals();
 		close(pfd[0]);
@@ -61,8 +60,7 @@ char				*ft_select(t_list *file_l, char *filename)
 		signal(SIGINT, ft_sighandler);
 	}
 	ft_list_clear(&file_l);
-	if (tmp)
-		ret = ft_strdup(tmp + ft_strlen(filename));
+	ret = (tmp) ? ft_strdup(tmp + ft_strlen(filename)) : ret;
 	free(tmp);
 	free(filename);
 	return (ret);

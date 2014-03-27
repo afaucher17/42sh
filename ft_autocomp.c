@@ -6,11 +6,11 @@
 /*   By: tdieumeg <tdieumeg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/12 13:12:31 by tdieumeg          #+#    #+#             */
-/*   Updated: 2014/03/26 21:31:06 by jlinden          ###   ########.fr       */
+/*   Updated: 2014/03/27 12:01:28 by jlinden          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include			"42sh.h"
+#include			"sh42.h"
 
 static char			*ft_uniformize(char *dirname, char *d_name, int exec)
 {
@@ -51,11 +51,15 @@ static char			*ft_get_file(char *fullpath)
 	return (ft_strdup(fullpath));
 }
 
-static char			*ft_get_dir(char *fullpath)
+static char			*ft_get_dir(char *fullpath, t_list **file_l
+								, DIR **pdir, struct dirent **pdirent)
 {
 	int				i;
 	int				save;
 
+	*file_l = NULL;
+	*pdir = NULL;
+	*pdirent = NULL;
 	i = 0;
 	save = -1;
 	while (fullpath[i])
@@ -107,21 +111,14 @@ char				*ft_autocomp(char *fullpath, int exec, t_mlist *mlist)
 	t_list			*file_l;
 	char			*str;
 
-	file_l = NULL;
-	pdir = NULL;
-	pdirent = NULL;
-	dirname = ft_get_dir(fullpath);
+	dirname = ft_get_dir(fullpath, &file_l, &pdir, &pdirent);
 	if (exec && !dirname)
 		ft_path_exec(&file_l, mlist, pdir, pdirent);
 	else
 	{
-		if (!dirname)
-			dirname = ft_strdup("./");
+		dirname = (!dirname) ? ft_strdup("./") : dirname;
 		if ((pdir = opendir(dirname)) == NULL)
-		{
-			free(dirname);
-			return (NULL);
-		}
+			return (ft_strdel(&dirname));
 		while ((pdirent = readdir(pdir)) != NULL)
 		{
 			if ((str = ft_uniformize(dirname, pdirent->d_name, exec)))

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include		"42sh.h"
+#include		"sh42.h"
 
 void			ft_backspace(t_dlist **list, int visual, t_mlist *mlist)
 {
